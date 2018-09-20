@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SysCodeInfoMapper">
+
+
+     <sql id="tableName">
+          "SYSTEMCODEDTL"
+     </sql>
+
+     <sql id="field">
+          "SYSTEMCODESEQ",
+          "SYSTEMCODETYPE",
+          "SYSTEMCODENAME",
+          "SYSTEMCODEVALUESEQ",
+          "SYSTEMCODECHAR",
+          "SYSTEMCODENUMBER",
+          "SYSTEMCODEDATE",
+          "CODENOTE"       
+     </sql>
+     
+     <sql id="fieldValue">
+          #{SYSTEMCODESEQ},
+          #{SYSTEMCODETYPE},
+          #{SYSTEMCODENAME},
+          #{SYSTEMCODEVALUESEQ},
+          #{SYSTEMCODECHAR},
+          #{SYSTEMCODENUMBER},
+          #{SYSTEMCODEDATE},
+          #{CODENOTE}
+     </sql>
+     
+
+    <select id="sysCodeInfoList" parameterType="pd" resultType="pd">
+        SELECT *  From <include refid="tableName"/>  where SYSTEMCODENAME= #{SYSTEMCODENAME}
+
+    </select>
+       
+    <insert id="addSysCodeInfo" parameterType="pd">
+    <selectKey resultType="int" order="BEFORE" keyProperty="SYSTEMCODESEQ">
+             select max(SYSTEMCODESEQ)+1 from <include refid="tableName"/>
+    </selectKey>
+            insert into <include refid="tableName"/> ( <include refid="field"/> )
+            values ( <include refid="fieldValue"/> ) 
+    </insert>
+    
+    <update id="modSysCodeInfo" parameterType="pd">
+            update <include refid="tableName"/> set 
+                     "SYSTEMCODETYPE"=#{SYSTEMCODETYPE},
+			         "SYSTEMCODENAME"=#{SYSTEMCODENAME},
+			         "SYSTEMCODEVALUESEQ"=#{SYSTEMCODEVALUESEQ},			         
+			         "SYSTEMCODENUMBER"=#{SYSTEMCODENUMBER}, 
+			         "SYSTEMCODEDATE"=#{SYSTEMCODEDATE}, 
+			         "CODENOTE"=#{CODENOTE}       
+            where "SYSTEMCODESEQ"=#{SYSTEMCODESEQ}
+    </update>
+    
+      <!--根据主键删除-->
+    <delete id="batchDelSysCodenfo"  parameterType="string">
+    delete from <include refid="tableName"/>
+     	where  "SYSTEMCODESEQ"  in
+    <foreach collection="list" item="item" index="index" open="("  separator=","  close=")">
+    			#{item} 		
+    </foreach>	
+    </delete>
+    
+    
+    
+
+
+ 
+
+    
+</mapper>

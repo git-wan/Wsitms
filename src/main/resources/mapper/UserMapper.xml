@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UserMapper">
+
+
+     <sql id="tableName">
+          "SYS_USER"
+     </sql>
+
+     <sql id="field">
+          "USER_ID",
+          "USER_CODE",
+          "USER_NAME",
+          "USER_ROLE",
+          "PASSWD",
+          "FIRST_DATE",
+          "VALID_SDATE",
+          "VALID_TDATE",
+          "VALID",
+          "LOCKED",
+          "NOTE"          
+     </sql>
+     
+     <sql id="fieldValue">
+          #{USER_ID},
+          #{USER_CODE},
+          #{USER_NAME},
+          #{USER_TYPE},
+          #{PASSWD},
+          #{FIRST_DATE},
+          #{VALID_SDATE},
+          #{VALID_TDATE},
+          #{VALID},
+          #{LOCKED},
+          #{NOTE}
+     </sql>
+     
+     <select id="getUserInfo" parameterType="pd" resultType="pd">
+             select <include refid="field"/> from
+             <include refid="tableName"/>
+             where 1=1
+             <if test="USER_CODE !=null and PASSWD!=null">
+             and "USER_CODE"=#{USER_CODE} and "PASSWD"=#{PASSWD}
+             </if>            
+     </select>
+     
+    <!--定义分页  &gt; > &lt; <  -->
+    <!--字符串过滤用like   数字过滤用eq,gt,lt-->
+    <select id="userPage" parameterType="pd" resultType="pd">
+        <if test="start!=null and limit!=null">
+        SELECT *
+        FROM (SELECT ROWNUM r,t1.* From SYS_USER t1 where rownum &lt; #{start}+1 + #{limit} ) t2  where t2.r &gt;=#{start}+1
+        </if>
+    </select>
+    
+    <select id="userOne" resultType="pd" parameterType="string">
+            select <include refid="field"/>  from <include refid="tableName"/>  where "USER_ID" =#{ID}
+    </select>
+    
+    
+     <select id="userList" resultType="pd" >
+            select <include refid="field"/>  from <include refid="tableName"/>  
+    </select>
+        
+    <insert id="addUser" parameterType="pd">
+            insert into <include refid="tableName"/> ( <include refid="field"/> )
+            values ( <include refid="fieldValue"/> ) 
+    </insert>
+    
+    <update id="modUser" parameterType="pd">
+            update <include refid="tableName"/> set 
+                     "USER_CODE"=#{USER_CODE},
+			         "USER_NAME"=#{USER_NAME},
+			         "USER_TYPE"=#{USER_TYPE},
+			         "PASSWD"=#{PASSWD},
+			         "VALID_SDATE"=#{VALID_SDATE},
+			         "VALID_TDATE"=#{VALID_TDATE},
+			         "VALID"=#{VALID},
+			         "LOCKED"=#{LOCKED},
+			         "NOTE"=#{NOTE}            
+            where "USER_ID"=#{USER_ID}
+    </update>
+    
+</mapper>

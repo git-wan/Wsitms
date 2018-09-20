@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MenuMapper">
+
+
+     <sql id="tableName">
+          "SYS_MENU"
+     </sql>
+
+     <sql id="filed">
+          "MENU_ID",
+          "MENUNAME",
+          "NOTE"  
+     </sql>
+     
+     <select id="getMenus" parameterType="string" resultType="pd">
+             select m.MENU_ID,m.MENUNAME ,m.NOTE from
+                "SYS_MENU" m ,"SYS_ROLE_MENU" rm 
+             where m.MENU_ID= rm.MENU_ID  and rm.ROLE_NAME=#{USER_ROLE}
+     </select>
+     
+    <select id="getUserMoudles" parameterType="string" resultType="pd">
+             select  m.MODULE_ID,m.MODULENAME ,m.DESCRIBE,m.VALID,m.UPDATETIME, m.OPPATH,m.REGISTER,m.MENU_ID,m.GROUPNAME from "SYS_ROLE_MODULE" rm , "SYS_MODULE" m where  rm.MODULE_ID=m.MODULE_ID and  rm."USER_ID"=#{USER_ID}
+     </select>
+     
+     <select id="getRloeMoudles" parameterType="string" resultType="pd">
+             select  m.MODULE_ID,m.MODULENAME ,m.DESCRIBE,m.VALID,m.UPDATETIME, m.OPPATH,m.REGISTER,m.MENU_ID,m.GROUPNAME  from "SYS_ROLE_MODULE" rm , "SYS_MODULE" m where  rm.MODULE_ID=m.MODULE_ID and  rm.ROLE_NAME=#{USER_ROLE}
+     </select>
+     
+     <select id="getNoRloeMoudles" parameterType="pd" resultType="pd">
+             select  *  from "SYS_MODULE"  where 1=1  
+             <if test="modules!=null">
+              and   "MODULE_ID" not in
+                 <foreach collection="modules" item="item" index="index" open="("  separator=","  close=")">
+    			     #{item.MODULE_ID} 		
+                 </foreach>	
+             </if>
+             <if test="modules==null">
+             and  "MODULE_ID" is not null
+             </if>             
+     </select>
+     
+     <select id="getNoUserMoudles" parameterType="pd" resultType="pd">
+             select  *  from "SYS_MODULE"  where 1=1  
+             <if test="list!=null">
+              and   "MODULE_ID" not in
+                 <foreach collection="list" item="item" index="index" open="("  separator=","  close=")">
+    			     #{item.MODULE_ID} 		
+                 </foreach>	
+             </if>
+             <if test="list==null">
+             and  "MODULE_ID" is not null
+             </if>             
+     </select>
+     
+     
+     <insert id="addRoleMod" parameterType="pd">
+             insert into "SYS_ROLE_MODULE" ("ROLE_NAME","USER_ID","MODULE_ID","NOTE")  values(#{ROLE_NAME},#{USER_ID},#{MODULE_ID},#{NOTE})
+     </insert>
+     
+     <insert id="addRoleMenu" parameterType="pd">
+             insert into "SYS_ROLE_MENU" ("ROLE_NAME","MENU_ID")  values(#{ROLE_NAME},#{MENU_ID})
+     </insert>
+     
+     <delete id="delRoleMenu" parameterType="string">
+            delete from "SYS_ROLE_MENU"  where    "ROLE_NAME"  = #{ROLE_NAME}
+     </delete>
+     
+     <delete id="delRoleMod" parameterType="string">
+            delete from "SYS_ROLE_MODULE"  where    "ROLE_NAME"  = #{ROLE_NAME}
+     </delete>
+     
+     
+     <delete id="delUserMod" parameterType="string">
+            delete from "SYS_ROLE_MODULE"  where    "USER_ID"  = #{USER_ID}
+     </delete>
+     <!--<select id="getMenus" parameterType="string" resultType="pd">
+             select <include refid="filed"></include> from
+             <include refid="tableName"></include>
+             where "MODULE_ID" in
+             <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+             #{item}
+             </foreach>
+     </select> -->
+</mapper>

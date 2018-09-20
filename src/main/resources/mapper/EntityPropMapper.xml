@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="EntityPropMapper">
+
+
+     <sql id="tableName">
+          "ENTITYPROPERTY"
+     </sql>
+
+     <sql id="field">
+          "ENTPROP_ID",
+          "ENTITYNO",
+          "ENTITYNAME",
+          "PROPERTYNO", 
+          "PROPERTYNAME", 
+          "PROPERTYVALUE",
+          "PROPERTYMINI", 
+          "PROPERTYMAX",
+          "SHOWMARK",
+          "VALUEFLAG" ,
+          "AUTOENTRY",
+          "VALUETYPE"  
+     </sql>
+     
+     <sql id="fieldValue">
+          #{ENTPROP_ID},
+          #{ENTITYNO},
+          #{ENTITYNAME},
+          #{PROPERTYNO},
+          #{PROPERTYNAME},
+          #{PROPERTYVALUE},
+          #{PROPERTYMINI},
+          #{PROPERTYMAX},
+          #{SHOWMARK},
+          #{VALUEFLAG},
+          #{AUTOENTRY},
+          #{VALUETYPE}
+     </sql>
+     
+
+     
+    <!--定义分页  &gt; > &lt; <  -->
+    <!--字符串过滤用like   数字过滤用eq,gt,lt-->
+    <select id="entityPropList" parameterType="pd" resultType="pd">       
+        SELECT <include refid="field"/>
+        FROM <include refid="tableName"/> where "ENTITYNO"=#{ENTITYNO}
+    </select>
+    
+    
+    <select id="entPropEntry" parameterType="pd" resultType="pd">       
+        SELECT <include refid="field"/>
+        FROM <include refid="tableName"/> where "AUTOENTRY"='N' and "VALUEFLAG"='OP' and "ENTITYNO"=#{ENTITYNO}
+    </select>
+    
+    <select id="ipPatorl"  resultType="pd">       
+        SELECT <include refid="field"/>
+        FROM <include refid="tableName"/> where "PROPERTYNO"='IP' and "VALUEFLAG"='OP' 
+    </select>
+    
+    <select id="dbPatorl"  resultType="pd">       
+        SELECT <include refid="field"/>
+        FROM <include refid="tableName"/> where "PROPERTYNO"='DBCONNECT' and "VALUEFLAG"='OP' 
+    </select>
+    
+     <select id="dbList"  resultType="pd" parameterType="string">       
+        SELECT <include refid="field"/>
+        FROM <include refid="tableName"/> where   "ENTITYNO"=#{ENTITYNO}
+    </select>
+    
+    <select id="tableSpace"  resultType="pd">       
+        SELECT <include refid="field"/>
+        FROM <include refid="tableName"/> where "PROPERTYNO"='Tablespace' and "VALUEFLAG"='OP'
+    </select>
+    
+    <insert id="addEntityProp" parameterType="pd">
+    <selectKey resultType="int" order="BEFORE" keyProperty="ENTPROP_ID">
+             select max(ENTPROP_ID)+1 from <include refid="tableName"/>
+    </selectKey>
+            insert into <include refid="tableName"/> ( <include refid="field"/> )
+            values ( <include refid="fieldValue"/> ) 
+    </insert>
+    
+    <update id="modEntityProp" parameterType="pd">
+            update <include refid="tableName"/> set 
+                     "ENTITYNO"=#{ENTITYNO},
+			         "ENTITYNAME"=#{ENTITYNAME},
+			         "PROPERTYNO"=#{PROPERTYNO},
+			         "PROPERTYNAME"=#{PROPERTYNAME},
+			         <if test="PROPERTYVALUE!='****'">
+			         "PROPERTYVALUE"=#{PROPERTYVALUE},
+			         </if>
+			         "PROPERTYMINI"=#{PROPERTYMINI},
+			         "PROPERTYMAX" =#{PROPERTYMAX},
+                     "SHOWMARK"=#{SHOWMARK},
+                     "VALUEFLAG"=#{VALUEFLAG},
+                     "AUTOENTRY"=#{AUTOENTRY},
+                     "VALUETYPE"=#{VALUETYPE}
+            where "ENTPROP_ID"=#{ENTPROP_ID}
+    </update>
+</mapper>

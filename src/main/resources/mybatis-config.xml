@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+     <settings>
+     <!--返回空字段  -->
+            <setting name="callSettersOnNulls" value="true"/>
+            <!--插入空字段  -->
+            <setting name="jdbcTypeForNull" value="VARCHAR"/>
+     </settings>
+    <typeAliases>
+       <typeAlias type="com.wsit.utils.PageData" alias="pd"/>
+    </typeAliases>
+
+</configuration>

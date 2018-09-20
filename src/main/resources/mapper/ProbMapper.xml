@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ProblemMapper">
+
+
+     <sql id="tableName">
+          "PROBLEMREALTIME"
+     </sql>
+
+     <sql id="field">
+          "PROBLEMSEQ",
+          "PROBLEMHUMAN",
+          "PROBLEMTYPE",
+          "APPLICATION",
+          "DATE_",
+          "TIME_",
+          "PROBLEMNOTE",
+          "SHOWMARK",
+          "NOTE",
+          "RECORDER",
+          "INDATE",
+          "PROBLEMBACKSEQ",
+          "PROBLEMSTATUS"          
+     </sql>
+     
+     <sql id="fieldValue">
+          #{PROBLEMSEQ},
+          #{PROBLEMHUMAN},
+          #{PROBLEMTYPE},
+          #{APPLICATION},
+          #{DATE_},
+          #{TIME_},
+          #{PROBLEMNOTE},
+          #{SHOWMARK},
+          #{NOTE},
+          #{RECORDER},
+          #{INDATE},
+          #{PROBLEMBACKSEQ},
+          #{PROBLEMSTATUS}
+     </sql>
+     
+
+     
+    <!--定义分页  &gt; > &lt; <  -->
+    <!--字符串过滤用like   数字过滤用eq,gt,lt-->
+    <select id="problemList" parameterType="pd" resultType="pd">
+        <if test="start!=null and limit!=null">
+        SELECT *
+        FROM (SELECT ROWNUM r,t1.* From  <include refid="tableName"/>  t1 where rownum &lt; #{start}+1 + #{limit} and "PROBLEMBACKSEQ" is not null) t2  where t2.r &gt;=#{start}+1
+        </if>
+    </select>
+    
+    <select id="moduleOne" parameterType="string" resultType="pd">
+        SELECT <include refid="field"/>
+        FROM   <include refid="tableName"/>  
+        where "MODULE_ID"=#{id}
+    </select>
+    
+    <insert id="addModule" parameterType="pd">
+            insert into <include refid="tableName"/> ( <include refid="field"/> )
+            values ( <include refid="fieldValue"/> ) 
+    </insert>
+    
+    <update id="modModule" parameterType="pd">
+            update <include refid="tableName"/>
+                    <set>
+            <if test="PROBLEMHUMAN != null">
+                     "PROBLEMHUMAN"=#{PROBLEMHUMAN},
+             </if> 
+             <if test="PROBLEMTYPE != null">       
+			         "PROBLEMTYPE"=#{PROBLEMTYPE},
+			  </if>
+			  <if test="APPLICATION != null">
+			         "APPLICATION"=#{APPLICATION},
+			  </if>
+			  <if test="DATE_ != null">       
+                     "DATE_"=#{DATE_},
+              </if>
+              <if test="TIME_ != null">
+                     "TIME_"=#{TIME_},
+               </if>
+               <if test="PROBLEMNOTE != null">
+                     "PROBLEMNOTE"=#{PROBLEMNOTE},
+               </if>
+               <if test="SHOWMARK != null">
+                     "SHOWMARK"=#{SHOWMARK},
+                </if>
+                <if test="PROBLEMHUMAN != null">
+                     "NOTE"=#{NOTE},
+                </if>
+                <if test="NOTE != null">     
+                     "RECORDER"=#{RECORDER},
+                </if>
+                <if test="INDATE != null">     
+                     "INDATE"=#{INDATE},
+                </if>
+                <if test="PROBLEMBACKSEQ != null">     
+                     "PROBLEMBACKSEQ"=#{PROBLEMBACKSEQ},
+                </if>
+                <if test="PROBLEMSTATUS != null">
+                     "PROBLEMSTATUS"=#{PROBLEMSTATUS},
+                </if>
+                     
+           </set>
+            where "PROBLEMSEQ"=#{PROBLEMSEQ}
+    </update>
+    
+</mapper>

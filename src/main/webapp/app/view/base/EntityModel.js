@@ -1,0 +1,12 @@
+Ext.define('Wsitms.view.base.EntityModel',{
+	extend:'Ext.app.ViewModel',
+	alias:'viewmodel.entity-define',
+	requires:['Wsitms.model.Entity'],
+	stores:{
+		entityStore:{
+			model:'Entity',
+			autoLoad:false,
+			pageSize:0,
+		}
+	}
+})

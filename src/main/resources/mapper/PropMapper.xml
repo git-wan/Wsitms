@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PropMapper">
+
+
+     <sql id="tableName">
+          "PROPERTY"
+     </sql>
+
+     <sql id="field">
+          "PROPERTY_ID",
+          "PROPERTYNO",
+          "PROPERTYNAME",
+          "PROPERTYOP", 
+          "PROPERTYMARK", 
+          "PROPERTYVALUETYPE", 
+          "PROPERTYCHAR", 
+          "PROPERTYMINI", 
+          "PROPERTYMAX", 
+          "NOTE", 
+          "SHOWMARK"         
+     </sql>
+     
+     <sql id="fieldValue">
+          #{PROPERTY_ID},
+          #{PROPERTYNO},
+          #{PROPERTYNAME},
+          #{PROPERTYOP},
+          #{PROPERTYMARK},
+          #{PROPERTYVALUETYPE},
+          #{PROPERTYCHAR},
+          #{PROPERTYMINI},
+          #{PROPERTYMAX},
+          #{NOTE},
+          #{SHOWMARK}
+     </sql>
+     
+
+     
+    <!--定义分页  &gt; > &lt; <  -->
+    <!--字符串过滤用like   数字过滤用eq,gt,lt-->
+    <select id="propList" parameterType="pd" resultType="pd">       
+        SELECT <include refid="field"/>
+        FROM <include refid="tableName"/>
+    </select>
+    
+    
+    <insert id="addProp" parameterType="pd">
+     <selectKey resultType="int" order="BEFORE" keyProperty="PROPERTY_ID">
+             select max(PROPERTY_ID)+1 from <include refid="tableName"/>
+    </selectKey>
+            insert into <include refid="tableName"/> ( <include refid="field"/> )
+            values ( <include refid="fieldValue"/> ) 
+    </insert>
+    
+    <update id="modProp" parameterType="pd">
+            update <include refid="tableName"/> set 
+			         "PROPERTYNO"=#{PROPERTYNO},
+			         "PROPERTYNAME"=#{PROPERTYNAME},
+			         "PROPERTYOP"=#{PROPERTYOP},
+			         "PROPERTYMARK"=#{PROPERTYMARK},
+			         "PROPERTYVALUETYPE"=#{PROPERTYVALUETYPE},
+			         "PROPERTYCHAR"=#{PROPERTYCHAR},
+			         "PROPERTYMINI"=#{PROPERTYMINI},
+			         "PROPERTYMAX"=#{PROPERTYMAX},
+			         "NOTE"=#{NOTE},
+                     "SHOWMARK"=#{SHOWMARK}
+            where "PROPERTY_ID"=#{PROPERTY_ID}
+    </update>
+    
+</mapper>

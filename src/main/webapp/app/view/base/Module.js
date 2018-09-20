@@ -1,0 +1,81 @@
+Ext.define('Wsitms.view.base.Module',{
+	extend:'Ext.grid.Panel',
+	xtype:'module-manage',
+	requires:[
+		'Wsitms.view.base.ModuleController',
+		'Wsitms.view.base.ModuleModel'
+		],
+	    controller:'module-manage',
+	    viewModel:{type:'module-manage'},
+		bind:{store:'{moduleStore}'},
+	layout:'fit',
+	tbar:[{
+		text:'新增',
+		handler:'onAdd'
+	},{
+		text:'删除',
+		handler:'onDel'
+	},{
+		text:'修改',
+		handler:'onEdit'
+	},{
+		text:'查询',
+		handler:''
+	}],	
+	columns:[{
+		text:'模块ID',
+		dataIndex:'id',
+		hidden:true
+	},{
+		text:'模块编号',
+		dataIndex:'MODULE_CODE'
+	},{
+		text:'模块名称',
+		dataIndex:'MODULE_NAME'
+	},{
+		text:'模块注释',
+		dataIndex:'MODULE_COMMENT'
+	},{
+		text:'模块组',
+		dataIndex:'MODULE_GROUP'
+	},{
+		text:'有效',
+		dataIndex:'VALID'
+	},{
+		text:'最后更新时间',
+		dataIndex:'UPDATETIME'
+	},{
+		text:'版本',
+		dataIndex:'MODULE_VERSION'
+	},{
+		text:'注册人',
+		dataIndex:'REGISTER'
+	}],
+	 features: [{ftype:'grouping'}],
+/*	bbar:{
+		xtype:'pagingtoolbar',
+		displayInfo:true,
+		displayMsg:'显示:{0}-{1}条,总共:{2}条',
+		emptyMsg:'没有需要显示的数据'
+	},*/
+	selModel:{
+		selType:'checkboxmodel'
+	},
+    listeners:{
+    	afterlayout:{
+    		fn:'onAfterLayout',
+    		delay:1,
+    		single:true//只执行一次
+    	},
+/*    	groupclick: function (view, node, group, e, eOpts) {
+            view.features[0].collapseAll();
+            view.features[0].expand(group);
+    	}*/
+    },
+    
+      /*  groupclick: function (view, node, group, e, eOpts) {
+           view.features[0].collapseAll();
+           view.features[0].expand(group);*/
+       
+    
+})

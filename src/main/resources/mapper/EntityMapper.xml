@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="EntityMapper">
+
+
+     <sql id="tableName">
+          "ENTITY"
+     </sql>
+
+     <sql id="field">
+          "ENTITY_ID",
+          "ENTITYNO",
+          "ENTITYTYPE",
+          "ENTITYNAME", 
+          "CREATEDATE", 
+          "AVAILABILITYMARK", 
+          "INVALIDATION"        
+     </sql>
+     
+     <sql id="fieldValue">
+          #{ENTITY_ID},
+          #{ENTITYNO},
+          #{ENTITYTYPE},
+          #{ENTITYNAME},
+          #{CREATEDATE},
+          #{AVAILABILITYMARK},
+          #{INVALIDATION}
+     </sql>
+     
+
+     
+    <!--定义分页  &gt; > &lt; <  -->
+    <!--字符串过滤用like   数字过滤用eq,gt,lt-->
+    <select id="entityList" parameterType="pd" resultType="pd">       
+        SELECT <include refid="field"/>
+        FROM <include refid="tableName"/>
+    </select>
+    
+    <select id="queryEnt" parameterType="string" resultType="pd">       
+        SELECT <include refid="field"/>
+        FROM <include refid="tableName"/> where "ENTITYTYPE"= #{str}
+    </select>
+    
+    <insert id="addEntity" parameterType="pd">
+    <selectKey resultType="int" order="BEFORE" keyProperty="ENTITY_ID">
+             select max(ENTITY_ID)+1 from <include refid="tableName"/>
+    </selectKey>
+            insert into <include refid="tableName"/> ( <include refid="field"/> )
+            values ( <include refid="fieldValue"/> ) 
+    </insert>
+    
+    <update id="modEntity" parameterType="pd">
+            update <include refid="tableName"/> set 
+                     "ENTITYNO"=#{ENTITYNO},
+			         "ENTITYTYPE"=#{ENTITYTYPE},
+			         "ENTITYNAME"=#{ENTITYNAME},
+			         "CREATEDATE"=#{CREATEDATE},
+			         "AVAILABILITYMARK"=#{AVAILABILITYMARK},
+			         "INVALIDATION"=#{INVALIDATION}            
+            where "ENTITY_ID"=#{ENTITY_ID}
+    </update>
+    
+    
+</mapper>

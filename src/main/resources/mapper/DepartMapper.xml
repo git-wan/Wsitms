@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DepartMapper">
+
+
+     <sql id="tableName">
+          "BAS_DEPARTMENT"
+     </sql>
+
+     <sql id="field">
+          "DEPARTMENT_ID",
+          "DEPARTMENT_CODE",
+          "DEPARTMENT_NAME",
+          "COMPANY_CODE"         
+     </sql>
+     
+     <sql id="fieldValue">
+          #{DEPARTMENT_ID},
+          #{DEPARTMENT_CODE},
+          #{DEPARTMENT_NAME},
+          #{COMPANY_CODE}
+     </sql>
+     
+
+    <select id="departPage" parameterType="pd" resultType="pd">
+        <if test="start!=null and limit!=null">
+        SELECT *
+        FROM (SELECT ROWNUM r,t1.* From <include refid="tableName"/> t1 where rownum &lt; #{start}+1 + #{limit} ) t2  where t2.r &gt;=#{start}+1
+        </if>
+    </select>
+    
+    <select id="departOne" resultType="pd" parameterType="string">
+            select <include refid="field"/>  from <include refid="tableName"/>  where "DEPARTMENT_ID" =#{ID}
+    </select>
+    
+     <select id="departList" resultType="pd" >
+            select <include refid="field"/>  from <include refid="tableName"/>  
+    </select>
+    
+    <select id="company" resultType="pd" >
+            select *  from  BAS_COMPANY 
+    </select>
+    
+    
+    <insert id="addDepart" parameterType="pd">
+    <selectKey resultType="int" order="BEFORE" keyProperty="DEPARTMENT_ID">
+             select max(DEPARTMENT_ID)+1 from <include refid="tableName"/>
+    </selectKey>
+            insert into <include refid="tableName"/> ( <include refid="field"/> )
+            values ( <include refid="fieldValue"/> ) 
+    </insert>
+    
+    <update id="modDepart" parameterType="pd">
+            update <include refid="tableName"/> set 
+                     "DEPARTMENT_CODE"=#{DEPARTMENT_CODE},
+			         "DEPARTMENT_NAME"=#{DEPARTMENT_NAME},
+			         "COMPANY_CODE"=#{COMPANY_CODE}
+            
+            where "DEPARTMENT_ID"=#{DEPARTMENT_ID}
+    </update>
+    
+      <!--根据主键删除-->
+    <delete id="batchDelDepart"  parameterType="string">
+    delete from <include refid="tableName"/>
+     	where  "DEPARTMENT_ID"  in
+    <foreach collection="list" item="item" index="index" open="("  separator=","  close=")">
+    			#{item} 		
+    </foreach>	
+    </delete>
+    
+    
+    
+
+
+ 
+
+    
+</mapper>

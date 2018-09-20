@@ -1,0 +1,12 @@
+Ext.define('Wsitms.view.base.AseetModel',{
+	extend:'Ext.app.ViewModel',
+	alias:'viewmodel.aseet-register',
+	requires:['Wsitms.model.Aseet'],
+	stores:{
+		aseetStore:{
+			model:'Aseet',
+			autoLoad:false,
+			pageSize:10
+		}
+	}
+})

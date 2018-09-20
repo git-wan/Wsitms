@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="StaffMapper">
+
+
+     <sql id="tableName">
+          "BAS_EMPLOYEE"
+     </sql>
+
+     <sql id="field">
+          "EMPLOYEE_CODE",
+          "EMPLOYEE_NAME",
+          "COMPANY_CODE",
+          "DEPARTMENT_CODE" ,
+          "AM_POSITION" ,
+          "AM_OPERATION"        
+     </sql>
+     
+     <sql id="fieldValue">
+          #{EMPLOYEE_CODE},
+          #{EMPLOYEE_NAME},
+          #{COMPANY_CODE},
+          #{DEPARTMENT_CODE},
+          #{AM_POSITION},
+          #{AM_OPERATION}
+     </sql>
+     
+
+    <select id="staffPage" parameterType="pd" resultType="pd">
+        <if test="start!=null and limit!=null">
+        SELECT *
+        FROM (SELECT ROWNUM r,t1.* From <include refid="tableName"/> t1 where rownum &lt; #{start}+1 + #{limit} ) t2  where t2.r &gt;=#{start}+1
+        </if>
+    </select>
+    
+      <select id="staffOne" resultType="pd" parameterType="string">
+            select <include refid="field"/>  from <include refid="tableName"/>  where "EMPLOYEE_CODE" =#{ID}
+    </select>
+    
+    <insert id="addStaff" parameterType="pd">
+       <selectKey resultType="String"  keyProperty="EMPLOYEE_CODE" order="BEFORE">
+        select sys_guid() from dual
+       </selectKey>
+            insert into <include refid="tableName"/> ( <include refid="field"/> )
+            values ( <include refid="fieldValue"/> ) 
+    </insert>
+    
+    <update id="modStaff" parameterType="pd">
+            update <include refid="tableName"/> set 
+                     "EMPLOYEE_NAME"=#{EMPLOYEE_NAME},
+			         "COMPANY_CODE"=#{COMPANY_CODE},
+			          "DEPARTMENT_CODE"=#{DEPARTMENT_CODE},
+			         "AM_POSITION"=#{AM_POSITION},
+			          "AM_OPERATION"=#{AM_OPERATION}
+            
+            where "EMPLOYEE_CODE"=#{EMPLOYEE_CODE}
+    </update>
+    
+      <!--根据主键删除-->
+    <delete id="batchDelStaff"  parameterType="string">
+    delete from <include refid="tableName"/>
+     	where  "EMPLOYEE_CODE"  in
+    <foreach collection="list" item="item" index="index" open="("  separator=","  close=")">
+    			#{item} 		
+    </foreach>	
+    </delete>
+    
+</mapper>

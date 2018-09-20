@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="GroupMapper">
+
+
+     <sql id="tableName">
+          "SYS_ROLE"
+     </sql>
+
+     <sql id="field">
+          "ROLE_ID",
+          "ROLE_CODE",
+          "ROLE_NAME",
+          "NOTE"          
+     </sql>
+     
+     <sql id="fieldValue">
+          #{ROLE_ID},
+          #{ROLE_CODE},
+          #{ROLE_NAME},
+          #{NOTE}
+     </sql>
+     
+
+     
+    <!--定义分页  &gt; > &lt; <  -->
+    <!--字符串过滤用like   数字过滤用eq,gt,lt-->
+    <select id="roleList" parameterType="pd" resultType="pd">
+        <if test="start!=null and limit!=null">
+        SELECT *
+        FROM (SELECT ROWNUM r,t1.* From  <include refid="tableName"/>  t1 where rownum &lt; #{start}+1 + #{limit} ) t2  where t2.r &gt;=#{start}+1
+        </if>
+    </select>
+    
+    
+    <insert id="addRole" parameterType="pd">
+            insert into <include refid="tableName"/> ( <include refid="field"/> )
+            values ( <include refid="fieldValue"/> ) 
+    </insert>
+    
+    <update id="modRole">
+            update <include refid="tableName"/> set (
+                     "ROLE_CODE"=#{ROLE_CODE},
+			         "ROLE_NAME"=#{ROLE_NAME},
+			         "NOTE"=#{NOTE}
+            )
+            where "ROLE_ID"=#{ROLE_ID},
+    </update>
+    
+</mapper>
