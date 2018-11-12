@@ -20,10 +20,14 @@ Ext.define('Wsitms.view.base.ProblemBackModel', {
     	
     	opTemplateStore:{
     		model:'OpTemplate',
-    		pageSize:10,
+    		pageSize:100,
     		autoLoad:false,
     	},
 
-
+    	overProblemStore:{
+    		model:'Question',
+    		pageSize:10,
+    		autoLoad:false,
+    	},
     }
 });  

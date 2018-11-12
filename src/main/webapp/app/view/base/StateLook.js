@@ -2,38 +2,44 @@ Ext.define('Wsitms.view.base.StateLook',{
     extend:'Ext.panel.Panel',
     xtype:'state-look',
     layout:'hbox',
+    requires:[
+		'Wsitms.view.base.StLoController'
+	],
+	controller:'state-look',
     items:[{
         xtype:'grid',
         flex:3,
         frame:true,
         height:'100%',
+        reference:'entityStatus',
         tbar:[{
         	text:'查看全部'
         }],
         columns:[{
         	text:'实物编号',
-        	dataIndex:''
+        	dataIndex:'ENTITYNO'
         },{
         	text:'实物名称',
-        	dataIndex:''
+        	dataIndex:'ENTITYNAME'
         },{
         	text:'属性名称',
-        	dataIndex:''
+        	dataIndex:'PROPERTYNAME'
         },{
-        	text:'属性备注',
-        	dataIndex:''
+        	text:'属性值',
+        	dataIndex:'PROPERTYVALUE'
         },{
         	text:'属性取值',
-        	dataIndex:''
+        	dataIndex:'PROPERTYCHAR'
         },{
         	text:'属性数据值',
-        	dataIndex:''
+        	dataIndex:'PROPERTYNUMBER'
         },{
         	text:'状态',
-        	dataIndex:''
+        	dataIndex:'STATUS'
         },{
         	text:'巡检时间',
-        	dataIndex:''
+        	dataIndex:'CYCLETIME',
+        	flex:1
         }],
         
         bbar:{
@@ -51,34 +57,74 @@ Ext.define('Wsitms.view.base.StateLook',{
     		xtype:'form',
     		frame:true,
     		margin:'0 5 0 5',
+    		reference:'stateParams',
+    		layout:{
+    			type:'vbox',
+    			align:'center'
+    		},
     		items:[{
     			xtype:'datefield',
-    			fieldLabel:'起始日期:'
+    			fieldLabel:'起始日期:',
+    			margin:'10 0 10 0',
+    			editable:false,
+    			format:'Y-m-d',
+    			name:'STRATDATE'
     		},{
     			xtype:'datefield',
     			fieldLabel:'终止日期',
+    			editable:false,
+    			format:'Y-m-d',
+    			name:'ENDDATE'
     		},{
-    			xtype:'textfield',
-    			fieldLabel:'实物:'
+    			xtype:'combobox',
+    			fieldLabel:'实物:',
+    			name:'ENTITYNAME',
+    			displayField: 'name',
+				valueField:'abbr',
+				reference:'allEntity'
     		},{
-    			xtype:'textfield',
-    			fieldLabel:'属性'
+    			xtype:'combobox',
+    			fieldLabel:'属性',
+    			name:'PROPERTYNAME',
+				displayField: 'name',
+				valueField:'abbr',
+				editable:false,
+				store:{data:[{
+					'abbr':'IpAddress','name':'IP地址'
+				},{
+					'abbr':'Temperature','name':'空调温度'
+				},{
+					'abbr':'Humidity','name':'空调湿度'
+				},{
+					'abbr':'ISDBCONNECT','name':'数据库连接'
+				}]}
     		}],
-    		buttons:[{text:'查询'}]
+    		buttons:[{text:'查询',handler:'queryStatus'}]
     	},{
     		xtype:'form',
     		margin:'5 5 0 5',
+    		layout:{
+    			type:'vbox',
+    			align:'center'
+    		},
     		frame:true,
     		items:[{
     			xtype:'textfield',
     			fieldLabel:'温度计平均温度',
+    			margin:'10 0 10 0',
     			
     		},{
     			xtype:'textfield',
     			fieldLabel:'温度计平均湿度'
     		}]
     	}]
-    }]
+    }],
 
-
+/*    listeners:{
+	   afterlayout:{
+		fn:'onAfterLayout',
+		delay:1,
+		single:true//只执行一次
+	}
+},*/
 })

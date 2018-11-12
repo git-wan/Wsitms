@@ -27,25 +27,6 @@ Ext.define('Wsitms.view.base.DepartController', {
     			data :{
     				title: record ? '修改数据':'添加数据'
     			},
-/*    			store:{
-    				//storeId: 'simpsonsStore',
-    				model:{
-    					fields:[{
-    						name:'COMPANY_CODE',type:'string'
-    					},{
-    						name:'COMPANY_NAME',type:'string'
-    					}],
-    					proxy:{
-    						type:'ajax',
-    							api:{
-    								read:'/Wsitms/depart/company'
-    							}
-    					}
-    				},
-    				autoLoad:true,
-    				pageSize:0
-    		
-    			},*/
     			links:{
     				theDepart : record || {
     					//id : 'add',//会像后台发送数据

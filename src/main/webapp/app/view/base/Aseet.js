@@ -1,7 +1,7 @@
 Ext.define('Wsitms.view.base.Aseet',{
 	extend:'Ext.grid.Panel',
 	xtype:'aseet-register',
-	
+	id:'aseet-register',
 	layout:'fit',
 	requires:[
 		'Wsitms.view.base.AseetController',
@@ -10,6 +10,7 @@ Ext.define('Wsitms.view.base.Aseet',{
 	controller: 'aseet-register',
 	viewModel:{type:'aseet-register'},
 	bind:{store:'{aseetStore}'},
+	columnLines : true,
 	tbar:[{
 		text:'新增',
 		glyph:0xf067,
@@ -31,6 +32,10 @@ Ext.define('Wsitms.view.base.Aseet',{
 	},{
 		text:'查询',
 		handler:''
+	},{
+		id:'dlink',
+		text:'打印预览',
+		handler:'aa'
 	}],
 	
 	columns:[{

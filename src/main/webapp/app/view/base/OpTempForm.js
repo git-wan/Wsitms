@@ -1,11 +1,9 @@
 Ext.define('Wsitms.view.base.OpTempForm',{
 	extend:'Ext.window.Window',
 	xtype:'optemp-form',
-	height:'200',
+	height:'220',
 	width:300,
-	bind:{
-		title:'{title}'
-	},
+	title:'添加模板',
 	modal:true,//模态框，开启遮罩
 	//bind:{store:'{opTemplateStore}'},
 	items:{
@@ -18,27 +16,27 @@ Ext.define('Wsitms.view.base.OpTempForm',{
 	items:[{
 		xtype:'textfield',
 		fieldLabel:'操作关键词',
-		name:'OPMODELSEQ',
+		name:'OPKEYWORD',
 		allowBlank:false,
-		blankText:'模块编号不能为空',
+		blankText:'操作关键词不能为空',
 		msgTarget:'side',//设置不符合验证的提示方式
-		bind:'{opTemplateStore.OPMODELSEQ}'
+		//bind:'{opTemplateStore.OPMODELSEQ}'
 	},{
 		xtype:'textfield',
 		fieldLabel:'操作描述',
-		name:'OPKEYWORD',
+		name:'OPDESC',
 		allowBlank:false,
-		blankText:'模块名称不能为空',
+		blankText:'操作描述不能为空',
 		msgTarget:'side',
-		bind:'{opTemplateStore.OPKEYWORD}'
+		//bind:'{opTemplateStore.OPKEYWORD}'
 	},{
 		xtype:'textfield',
 		fieldLabel:'备注',
-		name:'OPDESC',
+		name:'OPNOTE',
 		allowBlank:false,
-		blankText:'模块注释不能为空',
+		blankText:'备注不能为空',
 		msgTarget:'side',
-		bind:'{opTemplateStore.OPDESC}'
+		//bind:'{opTemplateStore.OPDESC}'
 	}],
 
 	},

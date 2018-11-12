@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DutyMapper">
+
+     <sql id="tableName">
+          "DUTYINPUT"
+     </sql>
+
+     <sql id="field">
+          "DUTYID",
+          "DUTYTYPE",
+          "DATE_",
+          "TIME_",
+          "WATCHER",
+          "NETWORK_",
+          "SERVERIP",
+          "SERVER",
+          "CONTROL",
+          "CITY1-V",
+          "CITY1-H",
+          "CITY2-V", 
+          "CITY2-H", 
+          "UPS1-V", 
+          "UPS1-H", 
+          "UPS1-L", 
+          "UPS1-HINT", 
+          "UPS2-V", 
+          "UPS2-H", 
+           "UPS2-L",
+          "UPS2-HINT", 
+          "UPS3-V",  
+          "UPS3-H",
+          "UPS3-L",
+          "UPS3-HINT",
+          "SERVER1-C",
+          "SERVER1-M",
+          "SERVER2-C",
+          "SERVER2-M",
+          "SERVER3-C",
+          "SERVER3-M",
+          "POWER-C",
+          "POWER-M",
+          "NET-C",
+          "NET-M",
+          "OFFAREA",
+          "TEAROOM",
+          "DESTINE",
+          "LOCKROOM",
+          "MACROOM",
+          "NETROOM",
+          "POWROOM",
+          "CONROOM", 
+          "ONESERVER",
+          "OASERVER",
+          "NCSERVER",
+          "PERSONSERVER",
+          "MEMSERVER",
+          "SUPSERVER",
+          "ONEWEB",
+          "MEMWEB", 
+          "SUPWEB",
+          "CONWEB",
+          "OAWEB",
+          "NCWEB",
+          "COMWEB",
+          "PERSONWEB",
+          "ERRORLOG",
+          "CLOUD",
+          "NOTE",
+          "WSAPP",
+          "BACKUPS",
+          "GATEWAY"
+     </sql>
+     
+     <sql id="fieldValue">
+          #{DUTYID},
+          #{DUTYTYPE},
+          #{DATE_},
+          #{TIME_},
+          #{WATCHER},
+          #{NETWORK_},
+          #{SERVERIP},
+          #{SERVER},
+          #{CONTROL},
+          #{CITY1-V},
+          #{CITY1-H},
+          #{CITY2-V},
+          #{CITY2-H},
+          #{UPS1-V},
+          #{UPS1-H},
+          #{UPS1-L},
+          #{UPS1-HINT},
+          #{UPS2-V},
+          #{UPS2-H},
+          #{UPS2-L},
+          #{UPS2-HINT},
+          #{UPS3-V},
+          #{UPS3-H},
+          #{UPS3-L},
+          #{UPS3-HINT},
+          #{SERVER1-C},
+          #{SERVER1-M},
+          #{SERVER2-C},
+          #{SERVER2-M},
+          #{SERVER3-C},
+          #{SERVER3-M},
+          #{POWER-C},
+          #{POWER-M},
+          #{NET-C},
+          #{NET-M},
+          #{OFFAREA},
+          #{TEAROOM},
+          #{DESTINE},
+          #{LOCKROOM},
+          #{MACROOM},
+          #{NETROOM},
+          #{POWROOM},
+          #{CONROOM},
+          #{ONESERVER},
+          #{OASERVER},
+          #{NCSERVER},
+          #{PERSONSERVER},
+          #{MEMSERVER},
+          #{SUPSERVER},
+          #{ONEWEB},
+          #{MEMWEB},
+          #{SUPWEB},
+          #{CONWEB},
+          #{NCWEB},
+          #{OAWEB},
+          #{COMWEB},         
+          #{PERSONWEB},
+          #{ERRORLOG},
+          #{CLOUD},
+          #{NOTE},
+          #{WSAPP},
+          #{BACKUPS},
+          #{GATEWAY}
+     </sql>
+  
+    <insert id="addDuty" parameterType="pd">
+        <selectKey resultType="int" order="BEFORE" keyProperty="DUTYID">
+             select max(DUTYID)+1 from <include refid="tableName"/>
+        </selectKey>
+            insert into <include refid="tableName"/> ( <include refid="field"/> )
+            values ( <include refid="fieldValue"/> ) 
+    </insert>
+
+    <delete id="deleteDuty" parameterType="pd">
+            delete  from  <include refid="tableName"/> where DATE_ = #{DATE_} and DUTYTYPE = #{DUTYTYPE}
+    </delete>
+        
+    
+</mapper>

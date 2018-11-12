@@ -12,22 +12,6 @@ Ext.define('Wsitms.view.base.SysCodeController', {
     rowclick:function( grid,record, element, rowIndex, e, eOpts){
    	 var addModel =grid.getSelectionModel().getSelection()
    	 var SYSTEMCODENAME=record.get('SYSTEMCODENAME');
-/* 	 Ext.Ajax.request({
-			url : '/Wsitms/init/sysCodeInfoList',
-			params : {
-				SYSTEMCODENAME : SYSTEMCODENAME
-			},
-			success : function(response, opts) {
-				var respText = Ext.util.JSON.decode(response.responseText);                       
-				Ext.Msg.alert("信息提示", respText.msg);
-				me.getViewModel().getStore('departStore').load();   										
-			},
-			failure : function(response, opts) {
-				var respText = Ext.util.JSON.decode(response.responseText); 
-				alert(respText)
-				Ext.Msg.alert("信息提示", respText.msg);
-			}
-		});*/
  	 
 
  	 var store = Ext.create('Ext.data.Store', {

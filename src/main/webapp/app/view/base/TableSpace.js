@@ -1,22 +1,23 @@
 Ext.define('Wsitms.view.base.TableSpace',{
 	extend:'Ext.panel.Panel',
 	xtype:'table-space',
-	layout:'vbox',//布局可以激活百分比
+	layout:'hbox',//布局可以激活百分比
 	requires: ['Wsitms.view.base.TaSpController'],
 	controller: 'table-space',
 	items:[{
 		title:'数据库',
 		xtype:'grid',
+		border:1,
 		style:'margin-top:2px',
-		height:'60%',
-		width:'100%',
+		height:'100%',
+		width:'50%',
 		reference:'tableSpace',
 		tbar:[{
 			text:'数据库刷新',
 			handler:''
 		},{
 			text:'查询表空间',
-			handler:''
+			handler:'tableSpace'
 		}],
 		columns:[{
 			text:'实物编号',
@@ -28,24 +29,37 @@ Ext.define('Wsitms.view.base.TableSpace',{
 	},{
 		xtype:'grid',
 		title:'表空间',
-		height:'40%',
-		width:'100%',
+		style:'margin-top:2px',
+		height:'100%',
+		width:'50%',
+		reference:'querySpace',
 		tbar:[{
 			text:'保存',
 			handler:''
 		}],
 		columns:[{
 			text:'表空间名称',
-			dataIndex:''
+			dataIndex:'TABLENAME'
 		},{
 			text:'表空间大小M',
-			dataIndex:''
+			dataIndex:'TABLESIZE',
+			renderer:function(v){
+				return v+'M'
+			}
+		
 		},{
 			text:'已使用M',
-			dataIndex:''
+			dataIndex:'USED',
+			renderer:function(v){
+					return v+'M'
+				}
+				
 		},{
 			text:'利用率',
-			dataIndex:''
+			dataIndex:'UTILIZATION',
+	        renderer:function(v){
+				return v+'%'
+			}
 		}]
 	}],
     listeners:{

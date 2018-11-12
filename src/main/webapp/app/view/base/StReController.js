@@ -2,21 +2,7 @@ Ext.define('Wsitms.view.base.StReController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.state-record',
     
-    onAfterLayout:function(){
-    	
-   /* 	var model = Ext.create("Ext.data.TreeModel", { // 定义树节点数据模型
-           // extend : "Ext.data.Model",
-            fields : [
-            	{name : "text",type : "string",mapping:'ENTITYNAME'},
-            	{name : "leaf",type : "boolean",defaultValue: true},
-            	//{name : "expanded",type : "boolean",defaultValue: false},
-            	
-            	],
-            
-            	childType : 'text' 
-        });*/
-    	
-    	
+    onAfterLayout:function(){   	
         var store = Ext.create('Ext.data.TreeStore', {
             fields : [
             	{name : "ENTITYNO",type : "string"},
@@ -57,5 +43,25 @@ Ext.define('Wsitms.view.base.StReController', {
     	 });    	 
     	 this.lookup('entProp').setStore(store);
     	 this.lookup('entProp').getStore().load();
+    },
+    
+    saveStatus : function(){
+    	var store = this.lookup('entProp').getStore();    	
+    	var dataArr = [];
+    	store.each(function(record){
+    		dataArr.push(record.data)
+    	})
+    	var jsonData = JSON.stringify(dataArr) 
+ 		Ext.Ajax.request({
+				url : '/Wsitms/state/addStatus',
+				params :{'jsonData':jsonData},
+				method:'POST',
+				success : function(response, opts) {				
+					var respText = Ext.util.JSON.decode(response.responseText);                       
+					Ext.Msg.alert("信息提示", respText.msg);
+				},
+				failure : function(response, opts){		
+				}
+			}); 
     }
 })

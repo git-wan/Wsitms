@@ -9,14 +9,16 @@ Ext.define('Wsitms.view.base.DbPatrol',{
 	
 	tbar:[{
 		text:'DB巡查',
-		handler:'dbPatrol'
+		handler:'dbPatrol',
+		glyph:0xf010,
 	}],
 	columns:[{
 		text:'实物编号',
 		dataIndex:'ENTITYNO'
 	},{
 		text:'实物名称',
-		dataIndex:'ENTITYNAME'
+		dataIndex:'ENTITYNAME',
+		width:200
 	},{
 		text:'属性值',
 		dataIndex:'PROPERTYVALUE'
@@ -25,7 +27,13 @@ Ext.define('Wsitms.view.base.DbPatrol',{
 		dataIndex:'PROPERTYCHAR'
 	},{
 		text:'状态',
-		dataIndex:'STATUS'
+		dataIndex:'STATUS',
+		renderer : function(val, meta) {
+			if(val=='ERROR'){
+				meta.style = 'color: #FF0000';				
+			}
+			return val;
+			    }
 	}],
     listeners:{
     	afterlayout:{

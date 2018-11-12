@@ -14,6 +14,13 @@ Ext.define('Wsitms.model.EnPrStatus',{
 	},{
 		name:'PROPERTYCHAR', type:'string'
 	},{
+		name:'PROPERTYNUMBER', type:'string'
+	},{
+		name:'CYCLETIME', type:'string',convert :function(v,record){
+
+            return  Ext.util.Format.date(new Date(v),'Y-m-d:H:i:s');
+        }   
+	},{
 		name:'STATUS', type:'string'
 	}],
 	

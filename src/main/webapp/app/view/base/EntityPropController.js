@@ -37,7 +37,8 @@ Ext.define('Wsitms.view.base.EntityPropController', {
     		 ENTITYNAME:entity[0].get('ENTITYNAME'),
     		 PROPERTYNO:property[0].get('PROPERTYNO'),
     		 PROPERTYNAME:property[0].get('PROPERTYNAME'),
-    		 PROPERTYVALUE:'',
+    		 VALUEFLAG:property[0].get('PROPERTYMARK'),
+    		 VALUETYPE:property[0].get('PROPERTYVALUETYPE'),
     		 SHOWMARK:''		 
          });
     	this.lookup('entPropForm').loadRecord(record);   	
@@ -75,7 +76,7 @@ Ext.define('Wsitms.view.base.EntityPropController', {
     	var addUrl ='/Wsitms/init/addEntityProp';
     	var modUrl ='/Wsitms/init/modEntityProp';
     	var url =modUrl;
-    	if(id=='EntityProp-1'){
+    	if(id==''){
     		url=addUrl;
     	}
     	if(userForm.isValid()){

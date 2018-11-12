@@ -80,5 +80,9 @@
 			         "NOTE"=#{NOTE}            
             where "USER_ID"=#{USER_ID}
     </update>
+
+    <update id="editPass" parameterType="pd">
+            update  "SYS_USER" set "PASSWD"=#{PASSWD} where "USER_ID"=#{USER_ID}
+    </update>
     
 </mapper>

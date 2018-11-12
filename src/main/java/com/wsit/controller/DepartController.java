@@ -78,10 +78,8 @@ public class DepartController extends BaseController{
 		PageData pd =this.getPageData();
 		Map<String, Object> map =new HashMap<String, Object>();
 		try {
-			System.out.println(pd);
 			departService.addDepart(pd);
-		} catch (Exception e) {
-		
+		} catch (Exception e) {		
 			e.printStackTrace();
 			map.put("success", false);
 			map.put("msg", "数据提交出现异常");

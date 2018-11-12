@@ -1,7 +1,6 @@
 Ext.define('Wsitms.view.base.ProblemBack',{
 	extend:'Ext.panel.Panel',
 	xtype:'problem-back',
-	
 	requires:[
 		'Wsitms.view.base.ProblemBackController',
 		'Wsitms.view.base.ProblemBackModel',
@@ -12,9 +11,8 @@ Ext.define('Wsitms.view.base.ProblemBack',{
         type: "questback"
     },
 	layout:{
-			type:'anchor',
+			type:'fit',
 		},
-
 	    items:[{
 	    	xtype:'grid',
 	    	title:{
@@ -22,16 +20,16 @@ Ext.define('Wsitms.view.base.ProblemBack',{
 	    		style:'line-height:12px;font-size:12px;'
 	    	},
 	    	style:'margin-top:2px',
-	    	anchor:'100% 40%',
+	    	//anchor:'100% 40%',
 	    	frame:true,
 	    	autoScroll:true,
 	    	bind:{store:'{questStore}'},
+	    	reference:'waitSolve',
 	        plugins: [
 	            Ext.create('Ext.grid.plugin.CellEditing', {
 	                clicksToEdit: 2, //设置单击单元格编辑	               
 	            })
-	        ],
-	        
+	        ],	        
 	    	tbar:[{    		
 	        	 	text:'刷新问题',
 	            	tooltip:'',
@@ -47,6 +45,11 @@ Ext.define('Wsitms.view.base.ProblemBack',{
 	            	tooltip:'同步所有的改动到服务器',
 	            	glyph:0xf0c7,
 	            	handler :'editSave'
+	        	},{    		
+	        	 	text:'回复',
+	            	tooltip:'回复待解决的问题',
+	            	glyph:0xf067,
+	            	handler :'addBlack'
 	        	}],
 	    	columns:[{
 	    			text : '问题编号',
@@ -101,148 +104,17 @@ Ext.define('Wsitms.view.base.ProblemBack',{
 	        		dataIndex:'INDATE',
 	        		format:'Y-m-d'
 	        	}],
-	        selModel: {
+/*	        selModel: {
 	            selType: 'checkboxmodel'
-	        },
+	        },*/
  	
-	     },{
-	    	xtype:'form',
-	    	anchor:'100% 30%',
-	    	title:{
-	    		text:'详细记录',
-	    		style:'line-height:12px;font-size:12px;'
-	    	},
-	    	reference:'backForm',
-	    	autoScroll:true, 
-	    	items:[{ 
-	    		layout:'column',
-	    		margin:'10 0 0 10',
-	    		items:[{
-	        	fieldLabel:'反馈对象',
-	        	xtype:'textfield'
-                },{
-                fieldLabel:'反馈路径',
-                xtype:'textfield',
-                style:'margin-left:30px'
-                },{
-                fieldLabel:'成功标志',
-                xtype:'textfield',
-                margin:'0 0 0 30'
-                }]
-	    		 },{
-	    			 layout:'column',
-	    			 margin:'10 0 0 10',
-	    			 items:[{
-	    				 xtype:'textfield',
-	    				 fieldLabel:'回应人'
-	    			 },{
-	    				 xtype:'checkboxfield',
-	    				 fieldLabel:'是否回应问题',
-	    				 style:'margin-left:30px',
-	    				 boxLabel:'是'
-	    			 }]	    			 	    			 
-	    		 },{
-	    			 margin:'10 0 0 10',//上右下左
-	    			 xtype:'textarea',
-	    			 fieldLabel:'回应说明',	    			 
-	    			 width:'100%'
-	    		 },{
-	    			 margin:'10 0 0 10',
-	    			 xtype:'textarea',
-	    			 fieldLabel:'备注',	    			
-	    			 width:'100%'//最低宽度80
-	    		 }]
-
-	             },{                    
-                    layout:'hbox',
-                    anchor:'100% 30%', 
-                    autoScroll:true,
-                    xtype:'panel',
-	             	items:[{
-	             			xtype:'grid',
-	             			height:'100%',
-	             			flex:1,
-	             			border:true,
-	             			autoScroll:true,	             			
-	             			reference:'opGrid',	             	
-	            	   /*     plugins: [{
-	            	            ptype: 'rowediting',
-	            	            clicksToEdit: 1
-	            	        }],*/
-	             		   plugins: [
-	           	            Ext.create('Ext.grid.plugin.CellEditing', {
-	           	                clicksToEdit: 1, //设置单击单元格编辑	               
-	           	            })
-	           	            ],
-	             		  	title:{
-	            	    		text:'操作记录',
-	            	    		style:'line-height:12px;font-size:12px;'
-	            	    	},
-	             			tbar:[{
-	             				text:'添加操作记录',
-	             				glyph:0xf067,
-	             				handler:'addCol'
-	             			},{
-	             				text:'删除操作记录',
-	             			    glyph:0xf014,
-	             			    handler:'delCol'
-	             			},{
-	             				text:'添加操作记录',
-	             				glyph:0xf067,
-	             				handler:'addOpTemp'
-	             			}],
-	             			columns:[{
-	             				text:'操作序号',
-	             				dataIndex:'OPMODELSEQ',
-	             				editor: 'textfield'
-	             			},{
-	             				text:'操作关键词',
-	             				dataIndex:'OPKEYWORD',
-	             				editor: 'textfield'
-	             			},{
-	             				text:'操作描述',
-	             				dataIndex:'OPDESC',
-	             				editor: 'textfield'
-	             			}],
-	             		   selModel:{
-	             		    	selType:'checkboxmodel',
-	             		    },	             		
-	             		},
-	             		{
-	             		    xtype:'grid',
-	             		   bind:{store:'{opTemplateStore}'},
-	             		  	title:{
-	            	    		text:'模板',
-	            	    		style:'line-height:12px;font-size:12px;'
-	            	    	},
-	             			height:'100%',
-	             			flex:1,
-	             			border:true,//shang you  xia zuo
-	             			//autoScroll:true,
-	             			columns:[{
-	             				text:'模板编号',
-	             				dataIndex:'OPMODELSEQ'
-	             			},{
-	             				text:'操作关键词',
-	             				dataIndex:'OPKEYWORD'
-	             			},{
-	             				text:'操作描述',
-	             				dataIndex:'OPDESC'
-	             			},{
-	             				text:'备注',
-	             				dataIndex:'OPNOTE'
-	             			}],
-	             		   listeners:{
-		             			  rowdblclick:'rowdblclick'
-		             		    }
-	             		}],	             	
-	                 }],
-	                 buttons:[{
+	     }],
+/*	                 buttons:[{
 	                	 text:'提交回复'
 	                 },{
 	                	 text:'重置',
 	                	 handler:'resetForm'
-	                 }],	                 
+	                 }],*/	                 
 	             	listeners:{
 	            		afterlayout:{
 	            			fn:'onAfterLayout',

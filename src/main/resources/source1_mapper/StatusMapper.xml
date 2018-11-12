@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="StatusMapper">
+
+
+     <sql id="tableName">
+          "ENTITYPROPERTYSTATUS"
+     </sql>
+
+     <sql id="field">
+          "ENTITYNO",
+          "ENTITYNAME",
+          "PROPERTYNO",
+          "PROPERTYNAME",
+          "PROPERTYVALUE",
+          "CYCLETIME",
+          "PROPERTYCHAR",
+          "PROPERTYNUMBER",
+          "STATUS"         
+     </sql>
+     
+     <sql id="fieldValue">
+          #{ENTITYNO},
+          #{ENTITYNAME},
+          #{PROPERTYNO},
+          #{PROPERTYNAME},
+          #{PROPERTYVALUE},
+          #{CYCLETIME},
+          #{PROPERTYCHAR},
+          #{PROPERTYNUMBER},
+          #{STATUS}
+     </sql>
+     
+
+     
+    <!--定义分页  &gt; > &lt; <  -->
+    <!--字符串过滤用like   数字过滤用eq,gt,lt-->
+    <select id="problemList" parameterType="pd" resultType="pd">
+        <if test="start!=null and limit!=null">
+        SELECT *
+        FROM (SELECT ROWNUM r,t1.* From  <include refid="tableName"/>  t1 where rownum &lt; #{start}+1 + #{limit} and "PROBLEMBACKSEQ" is not null) t2  where t2.r &gt;=#{start}+1
+        </if>
+    </select>
+    
+    <select id="queryEntity"  resultType="string">
+        SELECT "ENTITYNAME"
+        FROM   <include refid="tableName"/>  
+    </select>
+    
+    <insert id="addModule" parameterType="pd">
+            insert into <include refid="tableName"/> ( <include refid="field"/> )
+            values ( <include refid="fieldValue"/> ) 
+    </insert>
+    
+    <select id="queryStatus" resultType="pd" parameterType="pd">
+            select <include refid="field"/> from <include refid="tableName"/> where 1 = 1
+            <if test="STRATDATE!=null and STRATDATE!=''">
+            and  "CYCLETIME" &gt;= #{STRATDATE}
+            </if>
+            <if test="ENDDATE!=null and ENDDATE!=''">  
+            and   "CYCLETIME" &lt;= #{ENDDATE}     
+            </if>
+            <if test="ENTITYNAME!=null and ENTITYNAME!=''">
+            and  "ENTITYNAME" = #{ENTITYNAME}
+            </if>
+            <if test="PROPERTYNAME!=null and PROPERTYNAME!=''">
+            and  "PROPERTYNAME" = #{PROPERTYNAME}
+            </if>
+    </select>
+</mapper>

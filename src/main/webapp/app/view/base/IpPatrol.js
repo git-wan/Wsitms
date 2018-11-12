@@ -7,7 +7,8 @@ Ext.define('Wsitms.view.base.IpPatrol',{
 	autoScroll:true,
 	tbar:[{
 		text:'巡查',
-		handler:'ipPatrol'
+		handler:'ipPatrol',
+		glyph:0xf010,
 	}],
 	columns:[{
 		text:'实物编号',
@@ -28,10 +29,22 @@ Ext.define('Wsitms.view.base.IpPatrol',{
 		
 	},{
 		text:'属性取值',
-		dataIndex:'PROPERTYCHAR'
+		dataIndex:'PROPERTYCHAR',
+		renderer : function(val, meta) {
+			if(val=='TimeOut'){
+				meta.style = 'color: #FF0000';
+			}
+			return val;
+		}
 	},{
 		text:'状态',
-		dataIndex:'STATUS'
+		dataIndex:'STATUS',
+		renderer : function(val, meta) {
+			if(val=='ERROR'){
+				meta.style = 'color: #FF0000';				
+			}
+			return val;
+			    }
 	}],
     listeners:{
     	afterlayout:{

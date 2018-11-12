@@ -13,7 +13,9 @@ Ext.define('Wsitms.view.base.AseetController',{
 	    	
 	    },
 
-	    
+	    aa : function(){
+	    	exportExcel('aseet-register','','销售报表'.xlsx)
+	    },
 	    onAdd:function(){
 	    	
 	    	this.displayForm(null);
@@ -108,43 +110,17 @@ Ext.define('Wsitms.view.base.AseetController',{
 	    	 this.dialog = Ext.destroy(this.dialog);
 	     },
 	     
-	     batchDel:function(){
-				var ids = '';
-				var me=this;
-	   			var selection = me.getView().getSelectionModel().getSelection();
-	   			if (selection.length == 0) {
-	   				Ext.Msg.alert("提示", "请选择要删除的记录!");
-	   				return false;
-	   			} else {
-	   				Ext.Msg.confirm("提示", "确定删除?", function(button, text) {
-	   					if (button == "yes") {
-	   						for (var i = 0; i < selection.length; i++) {
-								if (i == 0) {
-									ids = selection[i].get('id');
-								} else {
-									ids += "," + selection[i].get('id');
-								}
-							};
-	   					
-	   						Ext.Ajax.request({
-	   									url : '/Wsitms/depart/batchDelDepart',
-	   									params : {
-	   										idList : ids
-	   									},
-	   									success : function(response, opts) {
-	   										var respText = Ext.util.JSON.decode(response.responseText);                       
-	   										Ext.Msg.alert("信息提示", respText.msg);
-	   										me.getViewModel().getStore('departStore').load();   										
-	   									},
-	   									failure : function(response, opts) {
-	   										var respText = Ext.util.JSON.decode(response.responseText); 
-	   										alert(respText)
-	   										Ext.Msg.alert("信息提示", respText.msg);
-	   									}
-	   								});
-	   					}
-	   				});
-	   			}
+	     prn1_preview : function(){
+	    	 this.CreateOneFormPage();
+	    	 this.LODOP.PREVIEW();
+	     },
+	     
+	     CreateOneFormPage : function(){
+	    	    this.LODOP=getLodop(); 
+	    	    this.LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_表单一");
+	    	    this.LODOP.SET_PRINT_STYLE("FontSize",18);
+	    	    this.LODOP.SET_PRINT_STYLE("Bold",1);	    	    
+	    	    this.LODOP.ADD_PRINT_HTM(18,20,350,600,document.getElementById("aseet-register").innerHTML);
 	     }
 		
 })

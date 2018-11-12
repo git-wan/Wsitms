@@ -54,37 +54,18 @@ Ext.define('Wsitms.view.base.EntPropForm',{
 		msgTarget:'side',
 		readOnly:true  
 	},{
-		xtype:'combobox',
+		xtype:'textfield',
 		fieldLabel:'属性标志',
 		name:'VALUEFLAG',
 		allowBlank:false,
 		blankText:'属性标志不能为空',
 		msgTarget:'side',
-		queryMode:'local',
-		displayField: 'name',
-		valueField:'abbr',
-		store:{data:[{
-			'abbr':'PSWD','name':'PSWD'
-		},{
-			'abbr':'PARA','name':'PARA'
-		},{
-			'abbr':'OP','name':'OP'
-		}]},
+		readOnly:true 
 	},{
 		xtype:'combobox',
 		fieldLabel:'属性值类型',
 		name:'VALUETYPE',
-/*		allowBlank:false,
-		blankText:'属性值类型不能为空',
-		msgTarget:'side',*/
-		queryMode:'local',
-		displayField: 'name',
-		valueField:'abbr',
-		store:{data:[{
-			'abbr':'NUMBER','name':'NUMBER'
-		},{
-			'abbr':'CHAR','name':'CHAR'
-		}]},
+		readOnly:true 
 	},{
 		xtype:'textfield',
 		fieldLabel:'属性值',

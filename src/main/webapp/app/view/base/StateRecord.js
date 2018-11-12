@@ -7,6 +7,7 @@ Ext.define('Wsitms.view.base.StateRecord',{
 	],
 	controller:'state-record',
 	viewModel:{type:'state-record'},
+
 	items:[{
 		title:'实物列表',
 		xtype:'treepanel',
@@ -43,9 +44,14 @@ Ext.define('Wsitms.view.base.StateRecord',{
 		title:'一卡通DB1',
 		xtype:'grid',
 		autoScroll:true,
+	    plugins: [
+	        Ext.create('Ext.grid.plugin.CellEditing', {
+	            clicksToEdit: 1, //设置单击单元格编辑	               
+	        })
+	        ],
 		tbar:[{
 			text:'保存状态',
-			handler:''
+			handler:'saveStatus'
 		},{
 			text:'重置',
 			handler:''
@@ -54,6 +60,10 @@ Ext.define('Wsitms.view.base.StateRecord',{
 		columns:[{
 			text:'实物编码',
 			dataIndex:'ENTITYNO'
+		},{
+			text:'实物编码',
+			dataIndex:'ENTITYNAME',
+			hidden:true
 		},{
 			text:'属性编号',
 			dataIndex:'PROPERTYNO'
@@ -68,13 +78,16 @@ Ext.define('Wsitms.view.base.StateRecord',{
 			dataIndex:'VALUETYPE'
 		},{
 			text:'数字值',
-			dataIndex:'PROPERTYNUMBER'
+			dataIndex:'PROPERTYNUMBER',
+			editor: 'textfield'
 		},{
 			text:'字符值',
-			dataIndex:'PROPERTYCHAR'
+			dataIndex:'PROPERTYCHAR',
+			editor: 'textfield'
 		},{
 			text:'状态',
-			dataIndex:''
+			dataIndex:'STATUS',
+			editor: 'textfield'
 		}]
 	}],
 	

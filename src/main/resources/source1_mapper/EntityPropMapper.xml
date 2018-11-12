@@ -62,6 +62,11 @@
         FROM <include refid="tableName"/> where "PROPERTYNO"='DBCONNECT' and "VALUEFLAG"='OP' 
     </select>
     
+    <select id="webPatorl"  resultType="pd">       
+        SELECT <include refid="field"/>
+        FROM <include refid="tableName"/> where "PROPERTYNO"='WEB' and "VALUEFLAG"='OP' 
+    </select>
+    
      <select id="dbList"  resultType="pd" parameterType="string">       
         SELECT <include refid="field"/>
         FROM <include refid="tableName"/> where   "ENTITYNO"=#{ENTITYNO}
@@ -88,7 +93,7 @@
 			         "PROPERTYNAME"=#{PROPERTYNAME},
 			         <if test="PROPERTYVALUE!='****'">
 			         "PROPERTYVALUE"=#{PROPERTYVALUE},
-			         </if>
+			         </if> 
 			         "PROPERTYMINI"=#{PROPERTYMINI},
 			         "PROPERTYMAX" =#{PROPERTYMAX},
                      "SHOWMARK"=#{SHOWMARK},

@@ -1,44 +1,42 @@
 Ext.define('Wsitms.view.base.QuestionController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.define-property',
-    requires:[
-    	
-    ],
+    alias: 'controller.questionPoint',
 
-    onAfterLayout:function(){
-    	this.getViewModel().getStore('propStore').load();
-    },
-
-    onAdd:function(){
-    	
-    	this.displayForm(null);
+    resetForm:function(){
+    	this.getView().reset();    	
     },
     
-    displayForm : function(record){
-    	var view = this.getView(); //得到列表页
-    	this.isEdit = !!record;
-    	this.dialog = view.add({
-    		xtype : 'question-form',
-    		session : true,
-    		viewModel : {
-    			data :{
-    				title: record ? '修改数据':'添加数据'
+    saveForm : function(){
+        var me = this;
+    	var questForm =this.getView();
+    	var url ='/Wsitms/question/addQuest';
+    	if(questForm.isValid()){
+    		questForm.submit({
+    			url:url,
+    			waitMsg:'正在提交数据',
+    			waitTitle:'提示',
+    			method:'POST',
+    			success:function(form,action){
+    				Ext.Msg.alert('提交成功', action.result.msg);    				
+    				me.getView().reset();
     			},
-    			links:{
-    				theDepart : record || {
-    					create : true,
-    					type : 'Question'    				
-    				}     			
-    			}    		
-    		}    	
-    	});
-    	this.dialog.show();   
-    
-    },
-    
-    onEdit:function(button){
-    	this.displayForm(button.getWidgetRecord());
-    },
+    			failure:function(form,action){
+    				switch (action.failureType) {
+    	            case Ext.form.action.Action.CLIENT_INVALID:
+    	                Ext.Msg.alert('提交失败', '不能使用无效值提交表单字段');
+    	                break;
+    	            case Ext.form.action.Action.CONNECT_FAILURE:
+    	                Ext.Msg.alert('提交失败', 'Ajax通信失败');
+    	                break;
+    	            case Ext.form.action.Action.SERVER_INVALID:
+    	               Ext.Msg.alert('提交失败', action.result.msg);
+    	       }
+    			}
+    		})
+    	}
+     	
+     },
+
     
     onSaveClick : function(){        
         var me = this;
@@ -68,11 +66,7 @@ Ext.define('Wsitms.view.base.QuestionController', {
      		batch = me.getView().getSession().getSaveBatch();
      	//判断有没有需要执行的批量操作	
      	if (batch && batch.getTotal()>0){
-     		alert(batch.getOperations()[0])
-     		
-     	
-     		
-     		
+     		alert(batch.getOperations()[0])     		
      		batch.on({
      			//在批量操作完成的时候执行
      			complete : function(_batch,operation,eOpts){
@@ -82,32 +76,23 @@ Ext.define('Wsitms.view.base.QuestionController', {
      						html:'数据已经同步到系统的资料库',
      						align:'t',
      						bodyPadding : 10
-     					});
-     				
+     					});     				
      				}
-     				Ext.Msg.hide(); //隐藏等待对话框
-     			
+     				Ext.Msg.hide(); //隐藏等待对话框     			
      			},
      			//在批量操作发生异常的时候执行
      			exception: function(_batch,operation,eOpts){
-     				alert('操作异常!部分操作遇到错误未能完成：\n\t'+operation.error);
-     			
+     				alert('操作异常!部分操作遇到错误未能完成：\n\t'+operation.error);     			
      			},
-     			operationcomplete : function(_batch,operation,eOpts){
-     			
-     			}
-     		
-     		
+     			operationcomplete : function(_batch,operation,eOpts){    			
+     			}    		    		
      		});
      		//显示等待对话框
      		Ext.Msg.wait('同步中','正在同步数据，请等待...');
      		//开始同步
-     		batch.start();
-     	
-     	
+     		batch.start();  	
      	}else{
-     		Ext.Msg.alert('','没有需要同步的数据');
-     	
+     		Ext.Msg.alert('','没有需要同步的数据');    	
      	}
      },
      
