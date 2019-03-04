@@ -47,4 +47,6 @@ public interface InitService {
 	public void batchDelSysCodeInfo(List ids)throws Exception;
 	
 	public List<PageData> sysCodeInfoList(PageData pd)throws Exception;
+		
+	public List<PageData> entValList()throws Exception;
 }

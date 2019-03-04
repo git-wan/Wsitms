@@ -153,7 +153,6 @@ public class StateServiceImp implements StateService{
 			list = DbConnectable.getTable(host, sid, user, pwd);
 			return list;
 		}
-
 		return null;
 	}
 
@@ -175,34 +174,39 @@ public class StateServiceImp implements StateService{
 		   Date date = new Date();
 		   for (PageData pageData : list) {			   
 			   pageData.put("CYCLETIME", date);
-			   dao.save("QuestMapper.addStatus", pageData);
-		}
-		
+			   dao.save("StatusMapper.addStatus", pageData);
+		}		
 	}
 
 	@Override
-	public List<String> queryEntity() throws Exception {
-		
+	public List<String> queryEntity() throws Exception {		
 		return (List<String>) dao.findForList("StatusMapper.queryEntity", null);
 	}
 
 	@Override
-	public List<PageData> queryStatus(PageData pd) throws Exception {
-		
+	public List<PageData> queryStatus(PageData pd) throws Exception {		
 		return (List<PageData>) dao.findForList("StatusMapper.queryStatus", pd);
 	}
 
 	@Override
-	public List<PageData> webStatus(PageData pd) throws Exception {
-		
+	public List<PageData> webStatus(PageData pd) throws Exception {		
 		if(pd.getString("PROPERTYNO").equals("WEB")){
 			List<PageData> list= webPatorl(null);
 			 HttpClient client = HttpClientBuilder.create().build();
-
-
 			for (PageData pageData : list) {
 			 HttpPost post = new HttpPost(pageData.getString("PROPERTYVALUE"));			
-			 HttpResponse response = client.execute(post);
+			 HttpResponse response = null;
+			try {
+				response = client.execute(post);
+			} catch (Exception e) {				
+				e.printStackTrace();
+				PageData excepion = new  PageData();
+				excepion.put("STATUS", pageData.getString("PROPERTYVALUE")+"地址异常");
+				list.clear();
+				list.add(excepion);
+				return list;
+						
+			}
 			 int code=response.getStatusLine().getStatusCode();
 			if(code==200||code==302){
 				pageData.put("PROPERTYCHAR", code);
@@ -215,13 +219,6 @@ public class StateServiceImp implements StateService{
 			return list;
 		}			
 	 return null;
-	
- 
-
-
-	
-	
-	
 	}
 
 	@Override

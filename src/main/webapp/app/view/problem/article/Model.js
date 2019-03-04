@@ -1,0 +1,12 @@
+Ext.define('Wsitms.view.problem.article.Model',{
+	extend:'Ext.app.ViewModel',
+	alias:'viewmodel.article',
+	requires:['Wsitms.model.Article'],
+	stores:{
+		artStore:{
+			model:'Article',
+			autoLoad:false,
+			pageSize:10
+		}
+	}
+})

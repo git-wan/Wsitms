@@ -1,0 +1,29 @@
+Ext.define('Wsitms.view.assess.AssInfoModel',{
+	extend:'Ext.app.ViewModel',
+	alias: 'viewmodel.assinfo',
+	requires:['Wsitms.model.AssInfo'],	
+	stores:{
+		assinfoStore:{
+			model:'AssInfo',
+			autoLoad:false,
+			pageSize:10,
+			proxy:{
+				type:'ajax',
+				api:{
+					read:'/Wsitms/assess/assInfoList'
+				}
+			}
+		},
+/*		assinfoStore:{
+			model:'Ass_pattern',
+			autoLoad:false,
+			pageSize:100,
+			proxy:{
+				type:'ajax',
+				api:{
+					read:'/Wsitms/assess/asspatList'
+				}
+			}
+		}*/
+	}
+})

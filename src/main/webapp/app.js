@@ -10,13 +10,13 @@ Ext.application({
 	  views: [
 	        'Wsitms.view.login.Login'
 	    ],
-	listen:{
+/*	listen:{
 		controller:{
 			'#':{
 				unmatchedroute:'onUnmatchedRoute'
 			}
 		}
-	},
+	},*/
     autoCreateViewport:'Wsitms.view.main.Main',
 	init:function(){
 /*		var me =this;

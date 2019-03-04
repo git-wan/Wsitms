@@ -90,6 +90,15 @@ public class DateUtil {
 		}
 	}
 
+	public static Date fomatDate1(String date) {
+		DateFormat fmt = new SimpleDateFormat("yyyy-MM");
+		try {
+			return fmt.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	/**
 	 * 校验日期是否合法
 	 * @return
@@ -180,6 +189,55 @@ public class DateUtil {
         String dateStr = sdf.format(date);
         return dateStr;
     }
+    
+    
+   public static int GetDaysCount( int year,  int month)
+    {
+        char days[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+        if (month == 2)
+        {
+            boolean bFlag = year%4==0&&year%100!=0||year%400==0;
+            if (bFlag)  //29
+            {
+                days[1] = 29;
+            }
+        }
+        return days[month-1];
+    }
+
+   public static String  CalculateWeekDay(int y, int m, int d) {
+	   String weekStr = null;
+       if (m == 1 || m == 2) {
+           m += 12;
+           y--;
+       }
+       int iWeek = (d + 2 * m + 3 * (m + 1) / 5 + y + y / 4 - y / 100 + y / 400) % 7;
+       switch (iWeek) {
+           case 0:
+        	   weekStr = "星期一";
+               break;
+           case 1:
+               weekStr = "星期二";
+               break;
+           case 2:
+               weekStr = "星期三";
+               break;
+           case 3:
+               weekStr = "星期四";               
+               break;
+           case 4:      	   
+        	   weekStr = "星期五";
+               break;
+           case 5:
+               weekStr = "星期六";
+               break;
+           case 6:
+        	   weekStr = "星期日";
+               break;
+       }
+       return weekStr;
+   }
+
     
     public static void main(String[] args) {
     	System.out.println(getDays());

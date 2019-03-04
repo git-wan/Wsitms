@@ -34,11 +34,7 @@ Ext.define('Wsitms.view.main.ContentPanel', {
 		   items:[{
 			   
 			   text:'Test Bar',
-		   }
-			  
-			   
-			   
-		   ],
+		   }],
 		   xtype:'toolbar'
 	   }*/
 	items: [{

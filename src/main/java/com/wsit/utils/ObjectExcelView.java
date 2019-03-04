@@ -29,9 +29,9 @@ public class ObjectExcelView extends AbstractExcelView{
 			HSSFWorkbook workbook, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		//Date date = new Date();
-		String name = "销售日报";
+		String name = model.get("name")+"";
 		name = new String(name.getBytes("UTF-8"), "ISO8859-1");
-		String filename = name+Tools.date2Str((Date) model.get("SALEDATE"), "yyyyMMdd");
+		String filename = name+Tools.date2Str((Date) model.get("SALEDATE"), "yyyyMM");
 		HSSFSheet sheet;
 		HSSFCell cell;
 		response.setContentType("application/octet-stream");

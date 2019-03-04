@@ -141,4 +141,10 @@ public class InitServiceImp implements InitService{
 		return (List<PageData>) dao.findForList("EntityPropMapper.entPropEntry", pd);
 	}
 
+	@Override
+	public List<PageData> entValList() throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("EntityMapper.entValList", null);
+	}
+
 }

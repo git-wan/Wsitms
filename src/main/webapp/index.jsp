@@ -4,7 +4,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
   <head>
     <base href="<%=basePath%>">  
@@ -22,9 +22,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="ext/ext-all.js"></script>
     <script type="text/javascript" src="ext/ux.js"></script>
     <script type="text/javascript" src="ext/json2.js"></script>
-  <!--   <script type="text/javascript" src="ext/LodopFuncs.js"></script> -->
+    <script type="text/javascript" src="resources/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="resources\plupload\plupload.full.min.js"></script>
     <script type="text/javascript" src="ext/theme-triton/theme-triton.js"></script>
     <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="resources/time/MonthPicker.js"></script>
+    
     <script type="text/javascript">
      var userName ='${user.USER_NAME}';
      var USER_ID='${user.USER_ID}'; 

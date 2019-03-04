@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AssMapper">
+
+	<sql id="tableName">
+		"ASSESS"
+	</sql>
+
+	<sql id="tableName1">
+		"F_ASS"
+	</sql>
+
+	<sql id="field">
+		"ID",
+		"ASS_OBJECT",
+		"POSITION",
+		"ASS_DATE",
+		"T_SCO",
+		"REMARK",
+		"ADJUSTER"
+	</sql>
+
+	<sql id="field1">
+		"ID",
+		"ASS_OBJECT",
+		"F_SCO",
+		"ASS_DATE",
+		"SCO_LEVEL"
+	</sql>
+
+	<sql id="fieldValue">
+		#{ID},
+		#{ASS_OBJECT},
+		#{POSITION},
+		#{ASS_DATE},
+		#{T_SCO},
+		#{REMARK},
+		#{ADJUSTER}
+	</sql>
+
+	<sql id="fieldValue1">
+		#{ID},
+		#{ASS_OBJECT},
+		#{F_SCO},
+		#{ASS_DATE},
+		#{SCO_LEVEL}
+	</sql>
+
+
+
+	<!--定义分页 &gt; > &lt; < -->
+	<!--字符串过滤用like 数字过滤用eq,gt,lt -->
+	<select id="assessPage" parameterType="pd" resultType="pd">
+		<if test="start!=null and limit!=null">
+			SELECT *
+			FROM (SELECT ROWNUM r,t1.* From
+			<include refid="tableName" />
+			t1 where rownum &lt; #{start}+1 + #{limit} ) t2 where t2.r
+			&gt;=#{start}+1
+		</if>
+	</select>
+
+	<select id="getMonthAss_1" resultType="pd" parameterType="pd">
+		select ASS_OBJECT from
+		<include refid="tableName" />
+		where ASS_DATE = #{ASS_DATE} and STATUS !='等上级处理'
+	</select>
+
+	<select id="getMonthAss_2" resultType="pd" parameterType="pd">
+		select ASS_OBJECT,STATUS from
+		<include refid="tableName" />
+		where ASS_DATE = #{ASS_DATE} and ASS_OBJECT not in
+		<foreach collection="assList" open="(" close=")" separator=","
+			item="assobj" index="i">
+			#{assobj}
+		</foreach>
+	</select>
+
+	<select id="getMonthAss_3" resultType="string" parameterType="pd">
+		select ASS_OBJECT from
+		<include refid="tableName" />
+		where ASS_DATE = #{ASS_DATE} and STATUS ='评定完成'
+	</select>
+
+	<select id="getMonthAssObj" resultType="pd" parameterType="pd">
+		select b.ASS_OBJECT from ASS_STATUS a,ASSOBJ_ADJ b where a.ASS_OBJECT
+		= b.ASS_OBJECT and ASS_DATE = #{ASS_DATE} and ADJUSTER =#{userName}
+		<if test="STATUS!=null and STATUS!=''">
+			and STATUS =#{STATUS}
+		</if>
+	</select>
+
+	<select id="getObj" resultType="string" parameterType="pd">
+		select ASS_OBJECT from ASS_STATUS where ASS_DATE = #{ASS_DATE} and
+		ASS_OBJECT =#{userName}
+
+
+	</select>
+
+	<select id="getAssObj" resultType="pd" parameterType="pd">
+		select ASS_OBJECT from ASSOBJ_ADJ where ADJUSTER = #{ADJUSTER}
+	</select>
+
+	<select id="getT_SCO" parameterType="pd" resultType="pd">
+		SELECT
+		<include refid="field" />
+		FROM
+		<include refid="tableName" />
+		where "ASS_DATE"=#{ASS_DATE} and ASS_OBJECT=#{ASS_OBJECT}
+	</select>
+
+	<select id="assessList" resultType="pd" parameterType="pd">
+		SELECT *
+		FROM ASSESS a, ASS_STATUS b where a.ASS_DATE=b.ASS_DATE and a.ASS_OBJECT =
+		b.ASS_OBJECT and a.ASS_OBJECT in
+		<foreach collection="list" open="(" close=")" separator=","
+			item="assobj" index="i">
+			#{assobj}
+		</foreach>
+	</select>
+
+	<select id="getlead" resultType="string" parameterType="pd">
+		SELECT ASS_OBJECT
+		FROM ASSOBJ_ADJ where ADJUSTER =#{userName}
+	</select>
+
+	<select id="assInfo" parameterType="pd" resultType="pd">
+		select a.ID,SC_PRICE,ASS_SCORE,SCOREGROUP,SCOREINFO from ASSINFO a,ASS_SCORE
+		b where a.ID=b.ASSINFO_ID and ASS_ID =#{ASS_ID}
+	</select>
+
+	<select id="queryDate" parameterType="pd" resultType="pd">
+		SELECT *
+		FROM ASSESS a, ASS_STATUS b where a.ASS_DATE=b.ASS_DATE and a.ASS_DATE=
+		#{ASS_DATE} and a.ASS_OBJECT = b.ASS_OBJECT and a.ASS_OBJECT in
+		<foreach collection="objs" open="(" close=")" separator=","
+			item="assobj" index="i">
+			#{assobj}
+		</foreach>
+	</select>
+    <select id="asjList" resultType="pd">
+            SELECT *
+		FROM ASSOBJ_ADJ 
+    </select>
+	<insert id="addAss" parameterType="pd">
+		insert into
+		<include refid="tableName" />
+		(
+		<include refid="field" />
+		)
+		values (
+		<include refid="fieldValue" />
+		)
+	</insert>
+
+	<insert id="addStatus" parameterType="pd">
+		insert into ASS_STATUS ("ASS_DATE","ASS_OBJECT","STATUS")
+		values ( #{ASS_DATE}, #{ASS_OBJECT}, #{STATUS} )
+	</insert>
+
+	<insert id="addF_ASS" parameterType="pd">
+		insert into
+		<include refid="tableName1" />
+		(
+		<include refid="field1" />
+		)
+		values (
+		<include refid="fieldValue1" />
+		)
+	</insert>
+
+	<update id="modAss" parameterType="pd">
+		update
+		<include refid="tableName" />
+		set
+		"ASS_OBJECT"=#{ASS_OBJECT},
+		"POSITION"=#{POSITION},
+		"ASS_DATE"=#{ASS_DATE},
+		"STATUS"=#{STATUS},
+		"T_SCO"=#{T_SCO},
+		"REMARK"=#{REMARK},
+		"ADJUSTER"=#{ADJUSTER}
+		where "ID"=#{ID}
+	</update>
+
+	<update id="upAss" parameterType="pd">
+		update
+		<include refid="tableName" />
+		set
+		"T_SCO"=#{T_SCO} ,
+		"REMARK"=#{REMARK}
+		where "ID"=#{ID}
+	</update>
+
+	<update id="upStatus" parameterType="pd">
+		update ASS_STATUS set
+		"STATUS"=#{STATUS}
+		where "ASS_DATE"=#{ASS_DATE} and "ASS_OBJECT"=#{ASS_OBJECT}
+	</update>
+	<delete id="delAssInfo" parameterType="pd">
+		delete from
+		<include refid="tableName" />
+		where "ID"=#{ID}
+	</delete>    
+    
+    <select id="getInfoSCO" parameterType="string"  resultType="pd">
+    select SCOREGROUP,ASS_SCORE from ASSINFO a,ASS_SCORE
+		b where a.ID=b.ASSINFO_ID and ASS_ID =#{ID}
+    </select>
+     
+
+</mapper>

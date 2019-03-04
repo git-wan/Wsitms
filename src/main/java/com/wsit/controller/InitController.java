@@ -347,6 +347,18 @@ public class InitController extends BaseController{
 		map.put("msg", "数据删除成功");
 		return map;	
 	}
-	
+	//有效实体
+	@RequestMapping(value = "/entValList" , method = RequestMethod.GET)
+	@ResponseBody
+	public Object entValList(){
+		
+		PageData pd =this.getPageData();
+		try {
+			return initService.entValList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }

@@ -40,7 +40,7 @@ public class UserController extends BaseController {
 			map.put("success", "success");
 		} else {
 			map.put("failure", "failure");
-			map.put("msg", "用户火密码不正确");
+			map.put("msg", "用户或密码不正确");
 		}
 
 		return map;
@@ -152,4 +152,31 @@ public class UserController extends BaseController {
 		return map;
 
 	}
+	//得到咨询部人员
+	@RequestMapping(value = "/getZX",method = RequestMethod.GET)
+	@ResponseBody
+	public Object  getZX(){
+		PageData  pd = this.getPageData();
+		try {
+		return	userService.getZX();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}		
+	}
+		
+	//得到咨询部人员
+		@RequestMapping(value = "/mon_user",method = RequestMethod.GET)
+		@ResponseBody
+		public Object  mon_user(){
+			PageData  pd = this.getPageData();
+			try {
+			return	userService.mon_user(pd);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}		
+		}
 }

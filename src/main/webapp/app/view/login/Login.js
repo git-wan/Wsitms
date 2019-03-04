@@ -7,8 +7,7 @@ Ext.define('Wsitms.view.login.Login', {
     xtype: 'login-win',
     controller: 'login-win',
     //id:'app-login',  id有毒，请慎用
-    autoShow: true,
-    
+    autoShow: true,   
     layout: {
         type: 'fit'
     },
@@ -25,21 +24,20 @@ Ext.define('Wsitms.view.login.Login', {
             xtype: 'form',
             reference: 'form',
             bodyPadding: 15,
-
             defaults: {
                 xtype: 'textfield',
                 anchor: '100%',
                 labelWidth: 70,
                 allowBlank: false,
-                msgTarget: 'side'
+               // msgTarget: 'side'
             },
             items: [
                 {
                     name: 'USER_CODE',
                     fieldLabel: locale.userName,
-                    minLength: 3,
-                    maxLength: 25,
-                    vtype: 'alphanum',
+                    minLength: 2,
+                    maxLength: 20,
+                   // vtype: 'alphanum',
                     listeners: {
 						specialKey: 'onUserNameEnterPress'
 					}

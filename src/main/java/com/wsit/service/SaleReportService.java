@@ -14,5 +14,7 @@ public interface SaleReportService {
 	public List<PageData>  sale(PageData pd)throws Exception;
 	
 	public void dutyInput(PageData pd)throws Exception;
+	
+	public void addSch(PageData pd)throws Exception;
 
 }

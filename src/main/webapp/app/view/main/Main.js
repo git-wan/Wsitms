@@ -1,6 +1,4 @@
 Ext.define('Wsitms.view.main.Main', {
-
-
 	//1 继承某个组件
 	extend: 'Ext.container.Container',
 	//2 取别名,或者是xtype
@@ -28,21 +26,17 @@ Ext.define('Wsitms.view.main.Main', {
 		this.callParent();
 	},
 
-
 	items: [{
 		region: 'north',
 		xtype: 'topheader',
-
 	}, {
 		xtype: 'mainmenu',
 		region: 'west',
 		width: 250,
 		split: true,
-
 	}, {
 		region: 'center',
 		xtype: 'content-panel',
-
 	}]
 
 

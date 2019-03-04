@@ -42,7 +42,7 @@ public class StateController extends BaseController{
 	@Resource
 	StateService   stateService;
 	
-	
+	//ip列表
 	@RequestMapping(value="/ipPatorl",method=RequestMethod.GET)
 	@ResponseBody
 	public Object userList(){
@@ -56,7 +56,7 @@ public class StateController extends BaseController{
 	}
 	
 	
-	
+	//表空间数据库列表
 	@RequestMapping(value="/tableSpace",method=RequestMethod.GET)
 	@ResponseBody
 	public Object tableSpace(){
@@ -69,6 +69,7 @@ public class StateController extends BaseController{
 		return null;
 	}
 	
+	//db数据库列表
 	@RequestMapping(value="/dbPatorl",method=RequestMethod.GET)
 	@ResponseBody
 	public Object dbPatorl(){
@@ -80,7 +81,7 @@ public class StateController extends BaseController{
 		}
 		return null;
 	}
-	
+	//web列表
 	@RequestMapping(value="/webPatorl",method=RequestMethod.GET)
 	@ResponseBody
 	public Object	 webPatorl() {
@@ -92,7 +93,7 @@ public class StateController extends BaseController{
 		}
 		return null;
 	}
-	
+	//ip状态查询
 	@RequestMapping(value="/ipStatus",method=RequestMethod.GET)
 	@ResponseBody
 	public Object ipStatus(){
@@ -105,7 +106,7 @@ public class StateController extends BaseController{
 		return null;
 	}
 	
-	
+	//db状态查询
 	@RequestMapping(value="/dbStatus",method=RequestMethod.GET)
 	@ResponseBody
 	public Object dbStatus(){
@@ -117,19 +118,14 @@ public class StateController extends BaseController{
 		}
 		return null;
 	}
-	
+	//web状态查询
 	@RequestMapping(value="/webStatus",method=RequestMethod.GET)
 	@ResponseBody
-	public Object webStatus(){
+	public Object webStatus() throws Exception{
 		PageData pd = this.getPageData();
-		try {
 		return	stateService.webStatus(pd);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
-	
+	//表空间查询
 	@RequestMapping(value="/queryTable",method=RequestMethod.GET)
 	@ResponseBody
 	public Object queryTable(){
@@ -142,7 +138,7 @@ public class StateController extends BaseController{
 		return null;
 	}
 	
-	
+	//保存状态
 	@RequestMapping(value="/addStatus" ,method=RequestMethod.POST)
 	@ResponseBody
 	public Object addStatus(){
@@ -150,8 +146,7 @@ public class StateController extends BaseController{
 		Map<String, Object> map =new HashMap<String, Object>();
 		try {
 			stateService.addStatus(pd);
-		} catch (Exception e) {
-		
+		} catch (Exception e) {		
 			e.printStackTrace();
 			map.put("success", false);
 			map.put("msg", "数据提交出现异常");
@@ -161,7 +156,7 @@ public class StateController extends BaseController{
 		map.put("msg", "数据添加成功");
 		return map;		
 	}
-	
+	//保存异常状态
 	@RequestMapping(value="/addError" ,method=RequestMethod.POST)
 	@ResponseBody
 	public Object addError(){
@@ -181,8 +176,7 @@ public class StateController extends BaseController{
 		return map;		
 	}
 	
-	
-	
+		
 	@RequestMapping(value="/queryEntity",method=RequestMethod.GET)
 	@ResponseBody
 	public Object queryEntity(){
@@ -207,11 +201,10 @@ public class StateController extends BaseController{
 		return null;
 	}
 	
-	
+	//条件查询状态
 	@RequestMapping(value="/queryStatus",method=RequestMethod.GET)
 	@ResponseBody
-	public Object queryStatus(){
-		
+	public Object queryStatus(){		
 		PageData pd =this.getPageData();
 		String STRATDATE = pd.get("STRATDATE").toString();
 		String ENDDATE = pd.get("ENDDATE").toString();
@@ -223,9 +216,7 @@ public class StateController extends BaseController{
         	Date tdate=DateUtil.fomatDate(ENDDATE);
         	pd.put("ENDDATE", tdate);
 		}		
-		try {			 
-			
-	
+		try {			 				
 			return stateService.queryStatus(pd);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -233,16 +224,12 @@ public class StateController extends BaseController{
 		return null;
 	}
 	
-	@RequestMapping(value="/queryWeb",method=RequestMethod.POST)
+	/*@RequestMapping(value="/queryWeb",method=RequestMethod.POST)
 	@ResponseBody
-	public void  queryWeb(){
-		
+	public void  queryWeb(){		
 		  HttpClient client = HttpClientBuilder.create().build();
-
 		    HttpPost post = new HttpPost("http://localhost:8080/Wsitms");
-
 		    try {
-
 		        ContentProducer cp = new ContentProducer() {
 		            public void writeTo(OutputStream outstream) throws IOException {
 		                Writer writer = new OutputStreamWriter(outstream, "UTF-8");
@@ -256,6 +243,6 @@ public class StateController extends BaseController{
 		    } catch (Exception e) {
 		        e.printStackTrace();
 		    } 
-	}
+	}*/
 	
 }

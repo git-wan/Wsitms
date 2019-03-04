@@ -1,0 +1,11 @@
+Ext.define('Wsitms.view.aseet.CompanyModel',{
+	extend:'Wsitms.app.ViewModel',
+	requires:['Wsitms.model.Entity'],	
+	stores:{
+		entityStore:{
+			model:'Entity',
+			autoLoad:true,
+			pageSize:10
+		}
+	}
+})

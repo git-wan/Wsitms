@@ -19,5 +19,9 @@ public interface UserService {
 	public void modUser(PageData pd) throws Exception;
 
 	public void editPass(PageData pd) throws Exception;
+	
+	public  List<PageData> getZX() throws Exception;
+	
+	public  List<PageData> mon_user(PageData pd) throws Exception;
 
 }

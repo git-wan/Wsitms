@@ -36,6 +36,11 @@
         FROM <include refid="tableName"/>
     </select>
     
+    <select id="entValList" parameterType="pd" resultType="pd">       
+        SELECT <include refid="field"/>
+        FROM <include refid="tableName"/> where AVAILABILITYMARK = 'Valid'
+    </select>
+    
     <select id="queryEnt" parameterType="string" resultType="pd">       
         SELECT <include refid="field"/>
         FROM <include refid="tableName"/> where "ENTITYTYPE"= #{str}

@@ -14,14 +14,12 @@ Ext.define('Wsitms.view.main.Header', {
 		type:'hbox',
 		align:'middle'
 	},*/
-
 	//引用
 	requires: [
 		//'Wsitms.view.main.HeaderMenu'
 	],
 	//定义控制器等
 	viewModel: 'main',
-
 	//模板方法
 	initComponent: function () {
 		document.title = this.title;
@@ -50,12 +48,8 @@ Ext.define('Wsitms.view.main.Header', {
 			}, '-', {
 				text: '退出系统',
 				handler: 'onClickQuit'
-
 			}]
 		}]
-
-
 		this.callParent();
-
 	}
 })

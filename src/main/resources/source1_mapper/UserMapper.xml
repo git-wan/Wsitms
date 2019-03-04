@@ -31,7 +31,7 @@
           #{VALID_SDATE},
           #{VALID_TDATE},
           #{VALID},
-          #{LOCKED},
+          #{LOCKED}, 
           #{NOTE}
      </sql>
      
@@ -84,5 +84,18 @@
     <update id="editPass" parameterType="pd">
             update  "SYS_USER" set "PASSWD"=#{PASSWD} where "USER_ID"=#{USER_ID}
     </update>
+    
+    <select id="getZX" resultType="pd">
+            select *  from SYS_USER  where DEPART_NAME ='资讯部'
+    </select>
+    
+    <select id="mon_user" resultType="pd">
+            select *  from SYS_USER  where DEPART_NAME !='资讯部'
+    </select>
+    
+    <select id="leader_user" resultType="pd">
+            select USER_NAME  from SYS_USER  where USER_NAME in ('高兴','肖凯','钟育林')
+    </select>
+    
     
 </mapper>

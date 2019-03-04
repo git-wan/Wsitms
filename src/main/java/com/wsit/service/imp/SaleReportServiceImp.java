@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.wsit.dao.DAO;
 import com.wsit.service.SaleReportService;
+import com.wsit.utils.DateUtil;
 import com.wsit.utils.DbConnectable;
 import com.wsit.utils.IpConnectable;
 import com.wsit.utils.PageData;
@@ -185,6 +186,19 @@ public class SaleReportServiceImp implements SaleReportService {
 		pd.put("ERRORLOG", errorLog);
 		daoSupport.delete("DutyMapper.deleteDuty", pd);
 		daoSupport.save("DutyMapper.addDuty", pd);
+	}
+
+	@Override
+	public void addSch(PageData pd) throws Exception {
+		String schdate = pd.get("SCHDATE")+"";
+		int year = Integer.parseInt(schdate.substring(0, 4));
+		String monthStr = schdate.substring(5, schdate.length()).replace("0", "");
+		int month = Integer.parseInt(monthStr);
+		int days = DateUtil.GetDaysCount(year, month);
+		String week = DateUtil.CalculateWeekDay(year,month,1);
+		if(week.equals("星期一")){
+			
+		};
 	}
 
 }

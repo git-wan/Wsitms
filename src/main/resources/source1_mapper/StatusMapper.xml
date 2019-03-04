@@ -67,4 +67,8 @@
             and  "PROPERTYNAME" = #{PROPERTYNAME}
             </if>
     </select>
+    
+        <insert id="addStatus" parameterType="pd">
+            insert into "ENTITYPROPERTYSTATUS"  ("ENTITYNO","ENTITYNAME","PROPERTYNO","PROPERTYNAME","PROPERTYVALUE","CYCLETIME","PROPERTYCHAR","PROPERTYNUMBER","STATUS") values(#{ENTITYNO},#{ENTITYNAME},#{PROPERTYNO},#{PROPERTYNAME},#{PROPERTYVALUE},#{CYCLETIME},#{PROPERTYCHAR},#{PROPERTYNUMBER},#{STATUS})
+    </insert>
 </mapper>

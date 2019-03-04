@@ -23,11 +23,6 @@ Ext.define('Wsitms.model.Entity',{
         }   
 	}],
 	
-	proxy:{
-		type:'ajax',
-		api:{
-			read:'/Wsitms/init/entityList'
-		}
-	}
+
 	
 })

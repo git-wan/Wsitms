@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AssScoMapper">
+
+     <sql id="tableName">
+          "ASS_SCORE"
+     </sql>
+
+     <sql id="field">
+          "ASSINFO_ID",
+          "ASS_ID",
+          "ASS_SCORE"
+     </sql>
+     
+     <sql id="fieldValue">
+          #{ASSINFO_ID},
+          #{ASS_ID},
+          #{ASS_SCORE}
+     </sql>
+     
+
+     
+    <!--定义分页  &gt; > &lt; <  -->
+    <!--字符串过滤用like   数字过滤用eq,gt,lt-->
+    <select id="assessPage" parameterType="pd" resultType="pd">
+        <if test="start!=null and limit!=null">
+        SELECT *
+        FROM (SELECT ROWNUM r,t1.* From  <include refid="tableName"/>  t1 where rownum &lt; #{start}+1 + #{limit} ) t2  where t2.r &gt;=#{start}+1
+        </if>
+    </select>
+    
+    <select id="getAssSco" resultType="pd">
+            select * from <include refid="tableName"/> where ASS_ID = #{ASS_ID}
+    </select>
+    
+    <select id="aseetOne" parameterType="string" resultType="pd">
+        SELECT <include refid="field"/>
+        FROM   <include refid="tableName"/>  
+        where "ID"=#{id}
+    </select>
+    
+    <insert id="addAssSco" parameterType="pd">
+            insert into <include refid="tableName"/> ( <include refid="field"/> )
+            values ( <include refid="fieldValue"/> ) 
+    </insert>
+    
+    <update id="modAssSco" parameterType="pd">
+            update <include refid="tableName"/> set 
+                     "ASS_SCORE"=#{ASS_SCORE}            
+            where "ASS_ID"=#{ASS_ID} and "ASSINFO_ID"=#{ASSINFO_ID}
+    </update>
+    
+    <delete id="delAssInfo" parameterType="pd">
+            delete from <include refid="tableName"/> 
+            where "ID"=#{ID}    
+    </delete>
+    
+</mapper>

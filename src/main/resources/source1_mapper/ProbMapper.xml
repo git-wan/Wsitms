@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="ProblemMapper">
+<mapper namespace="ProbMapper">
 
 
      <sql id="tableName">
@@ -43,25 +43,39 @@
      
     <!--定义分页  &gt; > &lt; <  -->
     <!--字符串过滤用like   数字过滤用eq,gt,lt-->
-    <select id="problemList" parameterType="pd" resultType="pd">
-        <if test="start!=null and limit!=null">
-        SELECT *
-        FROM (SELECT ROWNUM r,t1.* From  <include refid="tableName"/>  t1 where rownum &lt; #{start}+1 + #{limit} and "PROBLEMBACKSEQ" is not null) t2  where t2.r &gt;=#{start}+1
-        </if>
+    <select id="questList"  resultType="pd">      
+        SELECT * from  <include refid="tableName"/>    where   "PROBLEMSTATUS" = 'QUESTION'      
     </select>
     
-    <select id="moduleOne" parameterType="string" resultType="pd">
-        SELECT <include refid="field"/>
-        FROM   <include refid="tableName"/>  
-        where "MODULE_ID"=#{id}
+    <select id="opTempList" resultType="pd">
+             select *  from PROBLEMOPMODEL
     </select>
     
-    <insert id="addModule" parameterType="pd">
+    <insert id="addQuest" parameterType="pd">
+        <selectKey resultType="int" order="BEFORE" keyProperty="PROBLEMSEQ">
+             select max(PROBLEMSEQ)+1 from <include refid="tableName"/>
+        </selectKey>
             insert into <include refid="tableName"/> ( <include refid="field"/> )
             values ( <include refid="fieldValue"/> ) 
     </insert>
     
-    <update id="modModule" parameterType="pd">
+    <insert id="addOpTemp" parameterType="pd">
+        <selectKey resultType="int" order="BEFORE" keyProperty="OPMODELSEQ">
+             select max(OPMODELSEQ)+1 from "PROBLEMOPMODEL"
+        </selectKey>
+            insert into "PROBLEMOPMODEL"  ("OPMODELSEQ", "OPKEYWORD","OPDESC","OPNOTE") values(#{OPMODELSEQ},#{OPKEYWORD},#{OPDESC},#{OPNOTE}) 
+    </insert>
+    
+    <insert id="addOp" parameterType="pd">
+            insert into "PROBLEMOP"  ("PROBLEMBACKSEQ","OPSEQ","OPKEYWORD","OPDESC") values(#{PROBLEMBACKSEQ},#{OPSEQ},#{OPKEYWORD},#{OPDESC})
+    </insert>
+    
+
+    
+    <update id="modState" parameterType="string">
+            update <include refid="tableName"/> set "PROBLEMSTATUS"='OVER' where "PROBLEMSEQ" = #{PROBLEMSEQ}
+    </update>
+    <update id="batchEdit" parameterType="pd">
             update <include refid="tableName"/>
                     <set>
             <if test="PROBLEMHUMAN != null">
@@ -104,5 +118,66 @@
            </set>
             where "PROBLEMSEQ"=#{PROBLEMSEQ}
     </update>
+    
+    <insert id="problemBack" parameterType="pd">
+            insert into "PROBLEMBACK" ("PROBLEMBACKSEQ","ANYONE","ROUTE","ROUTEMARK","ANSWERMARK","ANSWERNOTE","ANSWERDATE","ANSWERRECORDER","BACKNOTE")  values(#{PROBLEMBACKSEQ},#{ANYONE},#{ROUTE},#{ROUTEMARK},#{ANSWERMARK},#{ANSWERNOTE},#{ANSWERDATE},#{ANSWERRECORDER},#{BACKNOTE})
+    </insert>
+            
+    <select id="overProblem" resultType="pd" parameterType="pd">
+            select <include refid="field"/> from <include refid="tableName"/> where "PROBLEMSTATUS" = 'OVER'
+            <if test="STRATDATE!=null and STRATDATE!=''">
+            and  "DATE_" &gt;= #{STRATDATE}
+            </if>
+            <if test="ENDDATE!=null and ENDDATE!=''">  
+            and   "DATE_" &lt;= #{ENDDATE}     
+            </if>
+            <if test="PROBLEMTYPE!=null and PROBLEMTYPE!=''">
+            and  "PROBLEMTYPE" = #{PROBLEMTYPE}
+            </if>
+            <if test="APPLICATION!=null and APPLICATION!=''">
+            and  "APPLICATION" = #{APPLICATION}
+            </if>
+            <if test="RECORDER!=null and RECORDER!=''">
+            <bind name="RECORDERLIKE" value="'%'+RECORDER+'%'"/>
+            and  "RECORDER" like #{RECORDERLIKE}
+            </if>
+    </select>
+    
+    <select id="backDetail" parameterType="pd" resultType="pd">
+            select p.PROBLEMNOTE,b.ANYONE,b.ROUTE,b.ROUTEMARK,b.ANSWERMARK,b.ANSWERNOTE,b.ANSWERDATE,b.ANSWERRECORDER,b.BACKNOTE  from PROBLEMREALTIME p , PROBLEMBACK b  where p.PROBLEMSEQ = b.PROBLEMBACKSEQ  and b.PROBLEMBACKSEQ = #{PROBLEMBACKSEQ}
+    </select>
+    
+    <select id="backOp" parameterType="pd" resultType="pd">
+            select *  from "PROBLEMOP"  where "PROBLEMBACKSEQ" = #{PROBLEMBACKSEQ}
+    </select>
+    
+    <delete id="delOp" parameterType="string">
+            delete  from  "PROBLEMOP"  where "PROBLEMBACKSEQ" = #{PROBLEMBACKSEQ}
+    </delete>
+    
+    <select id="artList" parameterType="pd" resultType="pd">
+             SELECT *
+        FROM (SELECT ROWNUM r,t1.* From "ARTCILE" t1 where rownum &lt; #{start}+1 + #{limit} ) t2  where t2.r &gt;=#{start}+1
+    </select>
+    
+    <insert id = "addArt" parameterType="pd">
+            <selectKey resultType="int" order="BEFORE" keyProperty="OPMODELSEQ">
+             select max(ART_ID)+1 from "ARTCILE"
+            </selectKey>
+            insert into "ARTCILE"  ("ART_ID", "TITLE","CONTENT","HITS","AUTHOR") values(#{ART_ID},#{TITLE},#{CONTENT},0,#{AUTHOR}) 
+    </insert>
+         
+    <update id ="modArt" parameterType="pd">
+            update "ARTCILE"  set "TITLE"=#{TITLE},"CONTENT"=#{CONTENT}  where "ART_ID" = #{ART_ID}
+    </update>
+    
+    <update id= "hit" parameterType ="pd">
+            update "ARTCILE" set "HITS" = "HITS"+1 where "ART_ID" = #{ART_ID}
+    </update>
+    
+    <update id= "delPorb" parameterType ="pd">
+            update "PROBLEMREALTIME" set "PROBLEMSTATUS" = 'OVER'  where "PROBLEMSEQ" = #{PROBLEMSEQ}
+    </update>
+    
     
 </mapper>

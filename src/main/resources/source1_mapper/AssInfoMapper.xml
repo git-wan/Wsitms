@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AssInfoMapper">
+
+     <sql id="tableName">
+          "ASSINFO"
+     </sql>
+
+     <sql id="field">
+          "ID",
+          "ASSTYPE",
+          "SCOREGROUP",
+          "SCOREINFO",
+          "SC_PRICE"
+     </sql>
+     
+     <sql id="fieldValue">
+          #{ID},
+          #{ASSTYPE},
+          #{SCOREGROUP},
+          #{SCOREINFO},
+          #{SC_PRICE}
+     </sql>
+     
+
+     
+    <!--定义分页  &gt; > &lt; <  -->
+    <!--字符串过滤用like   数字过滤用eq,gt,lt-->
+    <select id="assessPage" parameterType="pd" resultType="pd">
+        <if test="start!=null and limit!=null">
+        SELECT *
+        FROM (SELECT ROWNUM r,t1.* From  <include refid="tableName"/>  t1 where rownum &lt; #{start}+1 + #{limit} ) t2  where t2.r &gt;=#{start}+1
+        </if>
+    </select>
+    
+    <select id="getMonthAss" resultType="pd">
+            select * from <include refid="tableName"/> where ASSTYPE = '月度'
+    </select>
+    
+    <select id="aseetOne" parameterType="string" resultType="pd">
+        SELECT <include refid="field"/>
+        FROM   <include refid="tableName"/>  
+        where "ID"=#{id}
+    </select>
+    
+    <insert id="addAssInfo" parameterType="pd">
+            insert into <include refid="tableName"/> ( <include refid="field"/> )
+            values ( <include refid="fieldValue"/> ) 
+    </insert>
+    
+    <update id="modAssInfo" parameterType="pd">
+            update <include refid="tableName"/> set 
+                     "ASSTYPE"=#{ASSTYPE},
+			         "SCOREGROUP"=#{SCOREGROUP},
+			         "SCOREINFO"=#{SCOREINFO},
+                     "SC_PRICE"=#{SC_PRICE}            
+            where "ID"=#{ID}
+    </update>
+    
+    <delete id="delAssInfo" parameterType="pd">
+            delete from <include refid="tableName"/> 
+            where "ID"=#{ID}    
+    </delete>
+    
+</mapper>

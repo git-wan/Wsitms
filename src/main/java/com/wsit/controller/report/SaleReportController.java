@@ -59,6 +59,7 @@ public class SaleReportController extends BaseController {
 		titles.add("同比月度累计");
 		dataMap.put("titles", titles);
 		dataMap.put("SALEDATE", date);
+		dataMap.put("name", "销售日报");
 		List<PageData> userList = saleReportService.sale(pd);
 		List<PageData> varList = new ArrayList<PageData>();
 		for (int i = 0; i < userList.size(); i++) {
@@ -95,6 +96,19 @@ public class SaleReportController extends BaseController {
 		}
 		map.put("success", true);
 		map.put("msg", "数据添加成功");
+		return map;
+	}
+	
+	@RequestMapping(value = "/addSch",method = RequestMethod.POST)
+	@ResponseBody
+	public Object addSch(){
+		PageData pd = this.getPageData();
+		try {
+			saleReportService.addSch(pd);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Map<String, Object> map = new HashMap<String, Object>();
 		return map;
 	}
 }

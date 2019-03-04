@@ -1,0 +1,14 @@
+Ext.define('Wsitms.model.AssSco',{
+	extend:'Wsitms.model.Base',	
+	fields:[{
+		name:'ASS_SCORE',type:'int'
+	},{
+		name:'SCOREGROUP',type:'string'
+	},{
+		name:'SCOREINFO',type:'string'
+	},{
+		name:'SC_PRICE',type:'int'
+	},{
+		name:'ID',type:'string'
+	}], 	
+})

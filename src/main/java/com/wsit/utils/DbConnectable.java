@@ -21,6 +21,7 @@ public class DbConnectable {
 			conn = DriverManager.getConnection(url,user,password);				
 		}catch (Exception e) {
 				e.printStackTrace();
+			//System.err.println("连接失败");
 				return false;
 			}finally {
 			if (conn != null) {
