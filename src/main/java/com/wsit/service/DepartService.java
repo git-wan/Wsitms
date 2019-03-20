@@ -21,4 +21,5 @@ public interface DepartService {
 	
 	public void batchDelDepart(List ids)throws Exception;
 
+	List<PageData> depNameList()throws Exception;
 }

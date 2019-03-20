@@ -66,8 +66,7 @@ Ext.define('Wsitms.view.define.EntityController', {
 				}
 			})
 		}
-
-	},
+		},
 
 	closeForm : function() {
 		this.dialog = Ext.destroy(this.dialog);

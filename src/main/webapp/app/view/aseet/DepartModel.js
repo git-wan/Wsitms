@@ -8,7 +8,7 @@ Ext.define('Wsitms.view.aseet.DepartModel', {
 		departStore : {
 			model : 'Depart',
 			autoLoad : false,
-			pageSize : 5,
+			pageSize : 100,
 		},
 
 	companyStore : {

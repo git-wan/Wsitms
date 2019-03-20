@@ -46,7 +46,8 @@ Ext.define('Wsitms.view.main.MainController', {
 		'Wsitms.view.assess.AssInfo',
 		'Wsitms.view.assess.Ass',
 		'Wsitms.view.assess.AssRs',
-		'Wsitms.view.assess.AssPlan'
+		'Wsitms.view.assess.AssPlan',
+		'Wsitms.view.assess.Asj'
 	],
 
 	//3方法

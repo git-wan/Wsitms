@@ -1,7 +1,7 @@
 Ext.define('Wsitms.view.aseet.DepartForm', {
 	extend : 'Ext.window.Window',
 	xtype : 'depart-form',
-	height : '220',
+	height : 220,
 	width : 300,
 	bind : {
 		title : '{title}'

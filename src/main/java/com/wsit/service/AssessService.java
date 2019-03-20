@@ -40,11 +40,27 @@ public interface AssessService {
 	
 	public List<PageData> asjList(PageData pd)throws Exception;	
 	
-	public List<PageData> assTimeList(PageData pd)throws Exception;	
+	public List<PageData> assplanList(PageData pd)throws Exception;
 	
-	public void addAssTime(PageData pd)throws Exception;
+	public void addAssPlan(PageData pd)throws Exception;
 		
 	public List<PageData> asspatList(PageData pd)throws Exception;	
 		
 	public List<PageData> AssResultList(PageData pd)throws Exception;
+
+	void addAssAsj(PageData pd)throws Exception;
+
+	void modAssAsj(PageData pd)throws Exception;
+
+	void modAssPlan(PageData pd)throws Exception;
+
+	void delAssPlan(PageData pd)throws Exception;
+
+	void delAssAsj(PageData pd)throws Exception;
+
+	List<PageData> assInfoNameList(PageData pd)throws Exception;
+
+	int isAsj(PageData pd)throws Exception;
+
+	List<String>  getAsj(PageData pd)throws Exception;
 }

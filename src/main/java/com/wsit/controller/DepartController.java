@@ -57,7 +57,19 @@ public class DepartController extends BaseController{
 		}
 		return null;
 	}
-	
+
+
+	@RequestMapping(value="/depNameList",method=RequestMethod.GET)
+	@ResponseBody
+	public Object  depNameList(){
+
+		try {
+			return departService.depNameList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	@RequestMapping(value="/company",method=RequestMethod.GET)
 	@ResponseBody
 	public Object  company(){

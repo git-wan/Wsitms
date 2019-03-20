@@ -40,7 +40,17 @@ public class AssessController extends BaseController {
 		}
 		return null;
 	}
-	
+	@RequestMapping(value = "/assInfoNameList", method = RequestMethod.GET)
+	@ResponseBody
+	public Object assInfoNameList() {
+		PageData pd = getPageData();
+		try {
+			return assessService.assInfoNameList(pd);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	@RequestMapping(value = "/assessList", method = RequestMethod.GET)
 	@ResponseBody
 	public Object assList() {
@@ -52,7 +62,7 @@ public class AssessController extends BaseController {
 		}
 		return null;
 	}
-	
+
 	
 	@RequestMapping(value = "/asspatList", method = RequestMethod.GET)
 	@ResponseBody
@@ -176,6 +186,19 @@ public class AssessController extends BaseController {
 			return null;
 		}		
 	}
+
+
+	@RequestMapping(value = "/getAsj",method = RequestMethod.GET)
+	@ResponseBody
+	public Object  getAsj(){
+		PageData  pd = this.getPageData();
+		try {
+			return	assessService.getAsj(pd);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	@RequestMapping(value = "/addAss",method = RequestMethod.POST)
 	@ResponseBody
@@ -194,15 +217,14 @@ public class AssessController extends BaseController {
 		map.put("msg", "数据添加成功");
 		return map;
 	}
-	
-	
-	@RequestMapping(value = "/addAssTime",method = RequestMethod.POST)
+
+	@RequestMapping(value = "/addAssAsj",method = RequestMethod.POST)
 	@ResponseBody
-	public Object addAssTime(){
+	public Object addAssAsj(){
 		PageData pd = this.getPageData();
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			assessService.addAssTime(pd);
+			assessService.addAssAsj(pd);
 		} catch (Exception e) {
 			e.printStackTrace();
 			map.put("success", false);
@@ -213,8 +235,126 @@ public class AssessController extends BaseController {
 		map.put("msg", "数据添加成功");
 		return map;
 	}
-	
-	@RequestMapping(value = "/assResList", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/modAssAsj",method = RequestMethod.POST)
+	@ResponseBody
+	public Object modAssAsj(){
+		PageData pd = this.getPageData();
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			assessService.modAssAsj(pd);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("success", false);
+			map.put("msg", "数据提交出现异常");
+			return map;
+		}
+		map.put("success", true);
+		map.put("msg", "数据修改成功");
+		return map;
+	}
+
+	@RequestMapping(value="/delAssAsj" ,method=RequestMethod.GET)
+	@ResponseBody
+	public Object delAssAsj(){
+		PageData pd =this.getPageData();
+		Map<String, Object> map =new HashMap<String, Object>();
+		try {
+			assessService.delAssAsj(pd);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("success", false);
+			map.put("msg", "数据删除出现异常");
+			return map;
+		}
+		map.put("success", true);
+		map.put("msg", "数据删除成功");
+		return map;
+	}
+
+	@RequestMapping(value = "/addAssPlan",method = RequestMethod.POST)
+	@ResponseBody
+	public Object addAssPlan(){
+		PageData pd = this.getPageData();
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			assessService.addAssPlan(pd);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("success", false);
+			map.put("msg", "数据提交出现异常");
+			return map;
+		}
+		map.put("success", true);
+		map.put("msg", "数据添加成功");
+		return map;
+	}
+
+    @RequestMapping(value = "/modAssPlan",method = RequestMethod.POST)
+    @ResponseBody
+    public Object modAssPlan(){
+        PageData pd = this.getPageData();
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            assessService.modAssPlan(pd);
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("success", false);
+            map.put("msg", "数据提交出现异常");
+            return map;
+        }
+        map.put("success", true);
+        map.put("msg", "数据修改成功");
+        return map;
+    }
+
+	@RequestMapping(value="/delAssPlan" ,method=RequestMethod.GET)
+	@ResponseBody
+	public Object delAssPlan(){
+		PageData pd =this.getPageData();
+		Map<String, Object> map =new HashMap<String, Object>();
+		try {
+			assessService.delAssPlan(pd);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("success", false);
+			map.put("msg", "数据删除出现异常");
+			return map;
+		}
+		map.put("success", true);
+		map.put("msg", "数据删除成功");
+		return map;
+	}
+	@RequestMapping(value="/isAsj" ,method=RequestMethod.GET)
+	@ResponseBody
+	public Object isAsj(){
+		PageData pd =this.getPageData();
+		Map<String, Object> map =new HashMap<String, Object>();
+		int flag =0;
+		try {
+			 flag = assessService.isAsj(pd);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("success", false);
+			map.put("msg", "0");
+			return map;
+		}
+		if(flag==1){
+			map.put("success", true);
+			map.put("msg", "1");
+			return map;
+		}
+		if(flag==2){
+			map.put("success", true);
+			map.put("msg", "2");
+			return map;
+		}
+		map.put("success", true);
+		map.put("msg", "3");
+		return map;
+	}
+
+    @RequestMapping(value = "/assResList", method = RequestMethod.GET)
 	@ResponseBody
 	public Object assResList() {
 		PageData pd = getPageData();
@@ -257,12 +397,12 @@ public class AssessController extends BaseController {
 	}
 	
 	
-	@RequestMapping(value = "/assTimeList", method = RequestMethod.GET)
+	@RequestMapping(value = "/assplanList", method = RequestMethod.GET)
 	@ResponseBody
 	public Object assTimeList() {
 		PageData pd = getPageData();
 		try {
-			return assessService.assTimeList(pd);
+			return assessService.assplanList(pd);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

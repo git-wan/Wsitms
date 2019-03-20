@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AssPlanMapper">
+
+    <sql id="tableName">
+          "ASS_PLAN"
+     </sql>
+
+    <sql id="field">
+          "ID",
+          "STARTDATE",
+          "ENDDATE",
+          "OBJ_GROUP",
+          "RULENAME",
+          "HEADER",
+          "PLANNAME"
+     </sql>
+    <sql id="fieldValue">
+          #{ID},
+          #{STARTDATE},
+          #{ENDDATE},
+          #{OBJ_GROUP},
+          #{RULENAME},
+          #{HEADER},
+          #{PLANNAME}
+     </sql>
+    <sql id="tableName1">
+          "ASSOBJ_ADJ"
+     </sql>
+    <sql id="field1">
+          "ID",
+          "ADJUSTER",
+          "ASS_OBJECT",
+          "ASSGROUP"
+     </sql>
+
+    <sql id="fieldValue1">
+          #{ID},
+          #{ADJUSTER},
+          #{ASS_OBJECT},
+          #{OBJ_GROUP}
+     </sql>
+
+
+    <!--定义分页  &gt; > &lt; <  -->
+    <!--字符串过滤用like   数字过滤用eq,gt,lt-->
+    <select id="assessPage" parameterType="pd" resultType="pd">
+        <if test="start!=null and limit!=null">
+            SELECT *
+            FROM (SELECT ROWNUM r,t1.* From
+            <include refid="tableName"/>
+            t1 where rownum &lt; #{start}+1 + #{limit} ) t2 where t2.r &gt;=#{start}+1
+        </if>
+    </select>
+
+    <select id="assplanList" resultType="pd">
+        select * from
+        <include refid="tableName"/>
+    </select>
+    <select id="asjList" resultType="pd">
+            SELECT *
+		FROM ASSOBJ_ADJ
+    </select>
+    <select id="isAsj" parameterType="pd" resultType="pd">
+        SELECT
+          *
+        FROM
+        <include refid="tableName1"/>
+        where "ASSGROUP"=#{OBJ_GROUP} and  "ADJUSTER" =#{userName}
+    </select>
+
+    <select id="queryAsj" parameterType="string" resultType="pd">
+        SELECT ASS_OBJECT
+        FROM <include refid="tableName1"/> where ASSGROUP = #{OBJ_GROUP} and ADJUSTER= #{ADJUSTER}
+         <if test="objs!=null and objs.size()>0">
+         and  ASS_OBJECT not in
+        <foreach collection="objs" open="(" close=")" separator=","
+                 item="assobj" index="i">
+            #{assobj}
+        </foreach>
+         </if>
+    </select>
+
+    <insert id="addAssPlan" parameterType="pd">
+        insert into
+        <include refid="tableName"/>
+        (
+        <include refid="field"/>
+        )
+        values (
+        <include refid="fieldValue"/>
+        )
+    </insert>
+
+    <insert id="addAssAsj" parameterType="pd">
+        insert into
+        <include refid="tableName1"/>
+        (
+        <include refid="field1"/>
+        )
+        values (
+        <include refid="fieldValue1"/>
+        )
+    </insert>
+
+    <update id="modAssPlan" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set
+        "STARTDATE"=#{STARTDATE},
+        "ENDDATE"=#{ENDDATE},
+        "OBJ_GROUP"=#{OBJ_GROUP},
+        "PLANNAME"=#{PLANNAME},
+        "RULENAME"=#{RULENAME},
+        "HEADER"=#{HEADER}
+        where "ID"=#{ID}
+    </update>
+
+    <update id="modAssAsj" parameterType="pd">
+        update
+        <include refid="tableName1"/>
+        set
+        "ADJUSTER"=#{ADJUSTER},
+        "ASS_OBJECT"=#{ASS_OBJECT},
+        "ASSGROUP"=#{ASSGROUP}
+        where "ID"=#{ID}
+    </update>
+
+    <delete id="delAssPlan" parameterType="pd">
+        delete from
+        <include refid="tableName"/>
+        where "ID"=#{ID}
+    </delete>
+    <delete id="delAssAsj" parameterType="pd">
+        delete from
+        <include refid="tableName1"/>
+        where "ID"=#{ID}
+    </delete>
+</mapper>

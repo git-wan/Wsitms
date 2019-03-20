@@ -40,8 +40,10 @@
     <select id="company" resultType="pd" >
             select *  from  BAS_COMPANY 
     </select>
-    
-    
+
+    <select id="depNameList" resultType="pd" >
+            select distinct DEPARTMENT_NAME from  BAS_DEPARTMENT
+    </select>
     <insert id="addDepart" parameterType="pd">
     <selectKey resultType="int" order="BEFORE" keyProperty="DEPARTMENT_ID">
              select max(DEPARTMENT_ID)+1 from <include refid="tableName"/>

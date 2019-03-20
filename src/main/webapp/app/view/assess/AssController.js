@@ -385,7 +385,7 @@ Ext.define('Wsitms.view.assess.AssController', {
 		}
 	},
 
-	saveForm : function() {
+	saveAssForm : function() {
 		var me = this;
 		var assForm = this.lookup('ass-form');
 		/*var id = this.lookup('primary_id').getValue();*/
@@ -398,7 +398,6 @@ Ext.define('Wsitms.view.assess.AssController', {
 				method : 'POST',
 				success : function(form, action) {
 					Ext.Msg.alert('提交成功', action.result.msg);
-					me.getViewModel().getStore('assStore').load();
 					me.dialog = Ext.destroy(me.dialog);
 				},
 				failure : function(form, action) {

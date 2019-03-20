@@ -36,31 +36,36 @@ Ext.define('Wsitms.view.assess.AssForm', {
 			fieldLabel:'评定对象',
 			xtype:'combobox',
 			name:'ASS_OBJECT',
+			reference:'ass_obj',
 			editable:false,
 			allowBlank : false,
 			displayField : 'ASS_OBJECT',
 			valueField : 'ASS_OBJECT',
 			style : 'margin-left:20px',
-			bind : {
-				store : '{mon_users_Store}'
-			}
-		},{
+			/*bind : {
+				store : '{store}'
+			}*/
+		},/*,{
 			xtype:'textfield',
 			fieldLabel:'部门',
 			name:'DEPARTNAME',
 			style : 'margin-left:20px',
 			value:'资讯部',
 			readOnly:true
-		}/*,{
-			xtype:'textfield',
-			fieldLabel:'岗位',
-			name:'POSITION',
+		},*/{
+			xtype:'datefield',
+			fieldLabel : '评定时间',
+			name : 'ASS_DATE',
+			value : new Date(),
+			format : 'Y-m-d',
 			style : 'margin-left:20px',
-		}*/],
+			readOnly : true,
+			style : 'margin-left:20px',
+		}],
 	},		
 	buttons : [ {
 		text : '保存',
-		handler : 'saveForm'
+		handler : 'saveAssForm'
 	}/*, {
 		text : '清空',
 		handler : 'resetForm',
