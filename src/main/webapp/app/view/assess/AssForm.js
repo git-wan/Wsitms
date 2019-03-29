@@ -41,31 +41,25 @@ Ext.define('Wsitms.view.assess.AssForm', {
 			allowBlank : false,
 			displayField : 'ASS_OBJECT',
 			valueField : 'ASS_OBJECT',
-			style : 'margin-left:20px',
+			style : 'margin-left:20px'
 			/*bind : {
 				store : '{store}'
 			}*/
-		},/*,{
-			xtype:'textfield',
-			fieldLabel:'部门',
-			name:'DEPARTNAME',
-			style : 'margin-left:20px',
-			value:'资讯部',
-			readOnly:true
-		},*/{
+		},{
 			xtype:'datefield',
 			fieldLabel : '评定时间',
 			name : 'ASS_DATE',
 			value : new Date(),
 			format : 'Y-m-d',
 			style : 'margin-left:20px',
-			readOnly : true,
-			style : 'margin-left:20px',
-		}],
+			readOnly : true
+
+		}]
 	},		
 	buttons : [ {
 		text : '保存',
-		handler : 'saveAssForm'
+		handler : 'saveAssForm',
+
 	}/*, {
 		text : '清空',
 		handler : 'resetForm',
@@ -73,6 +67,5 @@ Ext.define('Wsitms.view.assess.AssForm', {
 	}*/, {
 		text : '返回',
 		handler : 'closeForm'
-	} ],
-	
-})
+	} ]
+});

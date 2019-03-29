@@ -62,19 +62,6 @@ public class AssessController extends BaseController {
 		}
 		return null;
 	}
-
-	
-	@RequestMapping(value = "/asspatList", method = RequestMethod.GET)
-	@ResponseBody
-	public Object asspatList() {
-		PageData pd = getPageData();		
-		try {
-			return assessService.asspatList(pd);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 	
 	@RequestMapping(value = "/queryDate", method = RequestMethod.GET)
 	@ResponseBody
@@ -157,7 +144,7 @@ public class AssessController extends BaseController {
 		return map;
 	}
 	
-	@RequestMapping(value="/delAssInfo" ,method=RequestMethod.POST)
+	@RequestMapping(value="/delAssInfo" ,method=RequestMethod.GET)
 	@ResponseBody
 	public Object delAssInfo(){
 		PageData pd =this.getPageData();

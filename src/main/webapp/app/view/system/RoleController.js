@@ -214,11 +214,9 @@ Ext.define('Wsitms.view.system.RoleController', {
 				}
 			}
 		});
-
 		this.lookup('queryModInfo').setStore(store);
 		this.lookup('queryModInfo').getStore().load();
 	},
-
 
 	//删除信息
 	onBatchDel : function() {
@@ -232,21 +230,13 @@ Ext.define('Wsitms.view.system.RoleController', {
 		} else {
 			Ext.Msg.confirm("提示", "确定删除?", function(button, text) {
 				if (button == "yes") {
-
-
-					/*		for (var i = 0; i < selection.length; i++) {
-									
-								selection[i].drop();
-								
-								}*/
 					for (var i = 0; i < selection.length; i++) {
 						if (i == 0) {
 							ids = selection[i].get('id');
 						} else {
 							ids += "," + selection[i].get('id');
 						}
-					}
-					;
+					};
 
 					Ext.Ajax.request({
 						url : '/WsCarPark/depart/destroy',

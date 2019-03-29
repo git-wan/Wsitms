@@ -76,6 +76,7 @@ Ext.define('Wsitms.view.system.UserController', {
     			method:'POST',
     			success:function(form,action){
     				Ext.Msg.alert('提交成功', action.result.msg);
+					me.dialog.destroy();
     				me.getViewModel().getStore('userStore').load();
     			},
     			failure:function(form,action){

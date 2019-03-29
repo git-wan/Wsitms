@@ -1,7 +1,5 @@
 Ext.define('Wsitms.model.User',{
 	extend:'Wsitms.model.Base',
-	
-	
 	//model组成：字段和代理
 	//identifier:'uuid',
     fields:[{
@@ -12,7 +10,7 @@ Ext.define('Wsitms.model.User',{
     },{
     	name:'USER_NAME',type:'string'
     },{
-    	name:'USER_TYPE',type:'string'
+    	name:'USER_ROLE',type:'string'
     },{
     	name:'PASSWD',type:'string'
     },{
@@ -42,11 +40,4 @@ Ext.define('Wsitms.model.User',{
     	},
        //url:'/Wsitms/user/load',
     }
-
-
-
-
-
-
-
-})
+});

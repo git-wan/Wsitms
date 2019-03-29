@@ -31,7 +31,10 @@
         FROM (SELECT ROWNUM r,t1.* From  <include refid="tableName"/>  t1 where rownum &lt; #{start}+1 + #{limit} ) t2  where t2.r &gt;=#{start}+1
         </if>
     </select>
-    
+
+    <select id="queryRole" parameterType="pd" resultType="string">
+        select ROLE_NAME from  <include refid="tableName"/> where  "ROLE_ID"=#{ROLE_ID}
+    </select>
     
     <insert id="addRole" parameterType="pd">
     <selectKey resultType="int" order="BEFORE" keyProperty="ROLE_ID">

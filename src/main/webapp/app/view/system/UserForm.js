@@ -40,7 +40,7 @@ Ext.define('Wsitms.view.system.UserForm',{
 	},{
 		xtype:'textfield',
 		fieldLabel:'用户类型',
-		name:'USER_TYPE',
+		name:'USER_ROLE',
 		allowBlank:false,
 		blankText:'用户类型不能为空',
 		msgTarget:'side',

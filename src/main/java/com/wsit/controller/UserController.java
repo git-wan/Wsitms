@@ -112,9 +112,9 @@ public class UserController extends BaseController {
 		return map;
 	}
 
-	@RequestMapping(value = "ModUser", method = RequestMethod.POST)
+	@RequestMapping(value = "modUser", method = RequestMethod.POST)
 	@ResponseBody
-	public Object ModUser() {
+	public Object modUser() {
 		PageData pd = this.getPageData();
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
@@ -165,18 +165,4 @@ public class UserController extends BaseController {
 			return null;
 		}		
 	}
-		
-	//得到咨询部人员
-		@RequestMapping(value = "/mon_user",method = RequestMethod.GET)
-		@ResponseBody
-		public Object  mon_user(){
-			PageData  pd = this.getPageData();
-			try {
-			return	userService.mon_user(pd);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return null;
-			}		
-		}
 }

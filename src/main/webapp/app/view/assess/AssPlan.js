@@ -15,17 +15,21 @@ Ext.define('Wsitms.view.assess.AssPlan', {
     frame: true,
     tbar: [{
         text: '新增',
-        handler: 'onAdd'
+        handler: 'onAdd',
+        glyph : 0xf067
     }, {
         text: '删除',
-        handler: 'onDel'
+        handler: 'onDel',
+        glyph : 0xf014
     }, {
         text: '修改',
-        handler: 'onEdit'
+        handler: 'onEdit',
+        glyph : 0xf044
     }],
     columns: [{
         text: '评定计划名称',
         dataIndex: 'PLANNAME',
+        width:200
     }, {
         text: '评定负责人',
         dataIndex: 'HEADER'
@@ -37,10 +41,12 @@ Ext.define('Wsitms.view.assess.AssPlan', {
         dataIndex: 'ENDDATE'
     }, {
         text: '评定规则',
-        dataIndex: 'RULENAME'
+        dataIndex: 'RULENAME',
+        width:120
     }, {
         text: '评定组',
-        dataIndex: 'OBJ_GROUP'
+        dataIndex: 'OBJ_GROUP',
+        width:120
     }, {
         xtype: 'widgetcolumn',
         //width: 90,
@@ -60,4 +66,4 @@ Ext.define('Wsitms.view.assess.AssPlan', {
         },
     },
 
-})
+});

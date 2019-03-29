@@ -14,18 +14,6 @@ Ext.define('Wsitms.view.assess.Ass',{
 	},
 	layout:'fit',	
 	tbar:[{
-		text : '新增',
-		glyph:0xf067,
-		menu:[{
-			text:'月度',
-			handler:'addMonth',
-			tooltip:'新增月度评定',
-		},{
-			text:'年度',
-			handler:'addYear',
-			tooltip:'新增年度评定'
-		}]
-	},{
 		text : '修改',
 		glyph:0xf044,
 		handler : 'onEdit'
@@ -33,19 +21,12 @@ Ext.define('Wsitms.view.assess.Ass',{
 		text : '查看明细',
 		glyph:0xf010,
 		handler : 'queryInfo'
-	},/*,{
-		id:'dlink',
-		glyph:0xf1c3,
-		text:'导出EXCEL',
-	    handler:'aa',
-	},*/'-',{
+	},'-',{
 		fieldLabel:'查询时间',
 		xtype:'datefield',	
 		reference:'queryDate',
 		editable:false,
 		name:'SALEDATE',
-/*		maxValue:new Date(),
-		minValue:new Date(new Date()-7*24*60*60*1000),*/
 		editable:false,
 		format:'Y-m',
 		listeners:{
@@ -53,18 +34,14 @@ Ext.define('Wsitms.view.assess.Ass',{
 		}
 	}],
 	columns:[{
+		text:'评定计划名称',
+		dataIndex:'PLANNAME',
+		flex:1
+	},{
 		text:'评定对象',
 		dataIndex:'ASS_OBJECT',
 		flex:1
-	}/*,{
-		text:'部门',
-		dataIndex:'STORENAME',
-		flex:1
 	},{
-		text:'岗位',
-		dataIndex:'POSITION',
-		flex:1
-	}*/,{
 		text:'评定日期',
 		dataIndex:'ASS_DATE',
 		flex:1
@@ -80,11 +57,7 @@ Ext.define('Wsitms.view.assess.Ass',{
 		text:'评语',
 		dataIndex:'REMARK',
 		flex:1
-	},{
-		text:'状态',
-		dataIndex:'STATUS',
-		flex:1
-	}],	
+	}],
 	bbar:{
 		xtype:'pagingtoolbar',
 		displayInfo:true,

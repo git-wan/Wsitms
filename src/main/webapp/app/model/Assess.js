@@ -9,7 +9,7 @@ Ext.define('Wsitms.model.Assess',{
 		name:'POSITION',type:'string'
 	},{
 		name:'ASS_DATE',type:'string',convert :function(v,record){
-			return Ext.util.Format.date(new Date(v),'Y-m')
+			return Ext.util.Format.date(new Date(v),'Y-m-d')
 		}
 	},{
 		name:'ADJUSTER',type:'string'
@@ -19,5 +19,7 @@ Ext.define('Wsitms.model.Assess',{
 		name:'T_SCO',type:'string'
 	},{
 		name:'REMARK',type:'string'
+	},{
+		name:'PLANNAME',type:'string'
 	}],
 })

@@ -25,7 +25,7 @@
           #{USER_ID},
           #{USER_CODE},
           #{USER_NAME},
-          #{USER_TYPE},
+          #{USER_ROLE},
           #{PASSWD},
           #{FIRST_DATE},
           #{VALID_SDATE},
@@ -71,7 +71,7 @@
             update <include refid="tableName"/> set 
                      "USER_CODE"=#{USER_CODE},
 			         "USER_NAME"=#{USER_NAME},
-			         "USER_TYPE"=#{USER_TYPE},
+			         "USER_ROLE"=#{USER_ROLE},
 			         "PASSWD"=#{PASSWD},
 			         "VALID_SDATE"=#{VALID_SDATE},
 			         "VALID_TDATE"=#{VALID_TDATE},
@@ -83,6 +83,10 @@
 
     <update id="editPass" parameterType="pd">
             update  "SYS_USER" set "PASSWD"=#{PASSWD} where "USER_ID"=#{USER_ID}
+    </update>
+
+    <update id="upRole" parameterType="pd">
+        update "SYS_USER"  set  "USER_ROLE"=#{ROLE_NAME} where "USER_ROLE"=#{USER_ROLE}
     </update>
     
     <select id="getZX" resultType="pd">

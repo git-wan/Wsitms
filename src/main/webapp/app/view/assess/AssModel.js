@@ -6,17 +6,6 @@ Ext.define('Wsitms.view.assess.AssModel', {
 		'Wsitms.model.Assess'
 		],
 	stores : {
-		mon_users_Store : {
-			model : 'User',
-			autoLoad : false,
-			pageSize : 0,
-			proxy : {
-				type : 'ajax',
-				api : {
-					read : '/Wsitms/user/mon_user?userName=' + encodeURI(userName)
-				}
-			}
-		},
 		assStore : {
 			model : 'Assess',
 			autoLoad : false,

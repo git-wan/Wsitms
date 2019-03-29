@@ -10,7 +10,7 @@ Ext.define('Wsitms.view.assess.AsjController', {
     },
 
     displayForm: function (record, name) {
-        var view = this.getView(); //得到列表页
+        const view = this.getView(); //得到列表页
         this.isEdit = !!record;
         this.dialog = view.add({
             xtype: name,

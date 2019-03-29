@@ -13,13 +13,16 @@ Ext.define('Wsitms.view.assess.Asj', {
     bind: {store: '{asjStore}'},
     tbar: [{
         text: '新增',
-        handler: 'onAdd'
+        handler: 'onAdd',
+        glyph : 0xf067
     }, {
         text: '删除',
-        handler: 'onDel'
+        handler: 'onDel',
+        glyph : 0xf014
     }, {
         text: '修改',
-        handler: 'onEdit'
+        handler: 'onEdit',
+        glyph : 0xf044
     }],
     columns: [{
         text: '评定人',

@@ -61,8 +61,8 @@ Ext.define('Wsitms.view.assess.AssRsController',{
 	    },
 	    
 	    aa : function(){
-	    	var newdate = this.lookup('queryDate').getValue();
-	    	if(newdate==null){
+			let newdate = this.lookup('queryDate').getValue();
+			if(newdate==null){
 	    		Ext.Msg.alert('提示','请选择导出时间');
 	    		return false
 	    	}

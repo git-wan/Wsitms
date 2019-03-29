@@ -97,7 +97,7 @@ Ext.define('Wsitms.view.assess.AssPlanController', {
         var data = me.getView().getSelectionModel().getSelection();
         var number = data.length;
         if (number < 1) {
-            Ext.Msg.alert('提示', '请选择一条数据')
+            Ext.Msg.alert('提示', '请选择一条数据');
             return false;
         } else if (number == 1) {
             var id = data[0].get("ID");
@@ -139,6 +139,7 @@ Ext.define('Wsitms.view.assess.AssPlanController', {
         var objgroup = selection.get('OBJ_GROUP');
         var PLANNAME = selection.get('PLANNAME');
         var RULENAME = selection.get('RULENAME');
+        var HEADER = selection.get('HEADER');
         var flag = null;
         if (date >= sdate && date <= edate) {
             Ext.Ajax.request({
@@ -190,18 +191,34 @@ Ext.define('Wsitms.view.assess.AssPlanController', {
                                         style: 'margin-left:20px',
                                         readOnly: true,
                                         width: 500
-                                    })
+                                    });
                                     assForm.items.add(numberfield);
                                     assForm.items.add(textarea);
-                                })
+                                });
                                 var markarea = Ext.create('Ext.form.field.TextArea', {
                                     fieldLabel: '评语',
                                     name: 'REMARK',
                                     style: 'margin-left:20px',
                                     allowBlank: false,
                                     width: 400
-                                })
+                                });
+                                var plantext = Ext.create('Ext.form.field.Text', {
+                                    fieldLabel: '评语',
+                                    name: 'PLANNAME',
+                                    style: 'margin-left:20px',
+                                    hidden:true,
+                                    value:PLANNAME
+                                });
+                                var headertext = Ext.create('Ext.form.field.Text', {
+                                    fieldLabel: '评语',
+                                    name: 'HEADER',
+                                    style: 'margin-left:20px',
+                                    hidden:true,
+                                    value:HEADER
+                                });
                                 assForm.items.add(markarea);
+                                assForm.items.add(plantext);
+                                assForm.items.add(headertext);
                             }
                             var store = Ext.create('Ext.data.Store', {
                                 autoLoad: false,
@@ -224,11 +241,9 @@ Ext.define('Wsitms.view.assess.AssPlanController', {
                     })
                 },
                 failure: function (response, opts) {
-                    var respText = Ext.util.JSON.decode(response.responseText);
                     Ext.Msg.alert("信息提示", '操作异常');
                 }
             });
-
 
         } else {
             Ext.Msg.alert('提示', '不在评定时间内');
@@ -248,7 +263,6 @@ Ext.define('Wsitms.view.assess.AssPlanController', {
                 method : 'POST',
                 success : function(form, action) {
                     Ext.Msg.alert('提交成功', action.result.msg);
-                    me.getViewModel().getStore('assStore').load();
                     me.dialog = Ext.destroy(me.dialog);
                 },
                 failure : function(form, action) {
@@ -295,4 +309,4 @@ Ext.define('Wsitms.view.assess.AssPlanController', {
             }
         })
     },
-})
+});

@@ -2,7 +2,7 @@ Ext.define('Wsitms.view.assess.AssPlanForm', {
     extend: 'Ext.window.Window',
     xtype: 'assplan-window',
     height: 355,
-    width: 300,
+    width: 320,
     bind: {
         title: '{title}'
     },
@@ -21,13 +21,13 @@ Ext.define('Wsitms.view.assess.AssPlanForm', {
             fieldLabel: 'ID',
             name: 'ID',
             reference: 'majorkey',
-            hidden: true,
+            hidden: true
 
         }, {
             xtype: 'textfield',
             fieldLabel: '评定计划名称',
             name: 'PLANNAME',
-            allowBlank: false,
+            allowBlank: false
         }, {
             xtype: 'datefield',
             fieldLabel: '评定开始日期',
@@ -50,9 +50,10 @@ Ext.define('Wsitms.view.assess.AssPlanForm', {
             xtype: 'combobox',
             name: 'RULENAME',
             allowBlank: false,
+            editable:false,
             displayField: 'ASSTYPE',
             valueField: 'ASSTYPE',
-            bind:{store: '{assinfostore}'},
+            bind:{store: '{assinfostore}'}
         }, {
             fieldLabel: '评定组',
             xtype: 'combobox',
@@ -60,8 +61,9 @@ Ext.define('Wsitms.view.assess.AssPlanForm', {
             allowBlank: false,
             displayField: 'DEPARTMENT_NAME',
             valueField: 'DEPARTMENT_NAME',
-            bind:{store: '{departnamestore}'},
-        }],
+            bind:{store: '{departnamestore}'}
+
+        }]
     },
     buttons: [{
         text: '保存',
@@ -69,5 +71,5 @@ Ext.define('Wsitms.view.assess.AssPlanForm', {
     }, {
         text: '返回',
         handler: 'closeForm'
-    }],
-})
+    }]
+});

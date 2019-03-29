@@ -32,7 +32,7 @@ Ext.define('Wsitms.view.assess.AssInfo',{
 		}, {
 			text : '删除',
 			glyph:0xf014,
-			handler : 'del'
+			handler : 'onDel'
 		}],
 		columns:[{
 			text:'评定类型',

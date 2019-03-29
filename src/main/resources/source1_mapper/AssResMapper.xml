@@ -2,28 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="AssResMapper">
 
-     <sql id="tableName">
-          "F_ASS"
+    <sql id="tableName">
+          "ASS_RESULT"
      </sql>
 
-     <sql id="field">
-          "ID",
-          "F_SCO",
-          "ASS_DATE",
-          "ASS_OBJECT",
-          "SCO_LEVEL"
-     </sql>
-     
-     <sql id="fieldValue">
-          #{ID},
-          #{F_SCO},
-          #{ASS_DATE},
-          #{ASS_OBJECT},
-          #{SCO_LEVEL}
-     </sql>
-     
-
-      <sql id="field1">
+    <sql id="field">
           "ID",
           "F_SCO",
           "ASS_DATE",
@@ -36,10 +19,11 @@
           "CREATIVE",
           "NOTE",
           "ASS_LEVEL",
+          "PLANNAME",
           "ADJUSTER"
      </sql>
-     
-       <sql id="fieldValue1">
+
+    <sql id="fieldValue">
           #{ID},
           #{F_SCO},
           #{ASS_DATE},
@@ -52,55 +36,44 @@
           #{CREATIVE},
           #{NOTE},
           #{ASS_LEVEL},
+          #{PLANNAME},
           #{ADJUSTER}
      </sql>
-     
-    <!--定义分页  &gt; > &lt; <  -->
-    <!--字符串过滤用like   数字过滤用eq,gt,lt-->
-    <select id="assessPage" parameterType="pd" resultType="pd">
-        <if test="start!=null and limit!=null">
-        SELECT *
-        FROM (SELECT ROWNUM r,t1.* From  <include refid="tableName"/>  t1 where rownum &lt; #{start}+1 + #{limit} ) t2  where t2.r &gt;=#{start}+1
-        </if>
-    </select>
-    
-    <select id="AssResList" resultType="pd">
-            select * from <include refid="tableName"/> where  ASS_OBJECT in
-             <foreach collection = "list" open="(" close=")" separator="," item="assobj" index="i">
-            #{assobj}
-            </foreach>
-    </select>
-    
-     <select id="AssResultList" resultType="pd" parameterType="pd">
-              select * from ASS_RESULT where  ASS_OBJECT in
-             <foreach collection = "objs" open="(" close=")" separator="," item="assobj" index="i">
-            #{assobj}
-            </foreach>   
-            and   ADJUSTER =    '高兴' 
-            <if test="ASS_DATE !=null">
-            and ASS_DATE=#{ASS_DATE}
-            </if>
-     </select>
-     
-     <insert id="addResult" parameterType="pd"> 
-             insert into ASS_RESULT
-             (
-             <include refid="field1"/>
-             )
-             values (
-             <include refid="fieldValue1"/>
-             )
-     </insert>
-    
 
-    <update id="upF_sco" parameterType="pd">
-		update F_ASS set
-		"F_SCO"=#{F_SCO},
-		"SCO_LEVEL"=#{SCO_LEVEL}
-		where "ASS_DATE"=#{ASS_DATE} and "ASS_OBJECT"=#{ASS_OBJECT}
-	</update>
-	
-	<update id="upSco" parameterType="pd">
+    <select id="AssResList" resultType="pd">
+        select * from
+        <include refid="tableName"/>
+        where ASS_OBJECT in
+        <foreach collection="list" open="(" close=")" separator="," item="assobj" index="i">
+            #{assobj}
+        </foreach>
+    </select>
+
+<!--    <select id="AssResultList" resultType="pd" parameterType="pd">
+        select * from ASS_RESULT where ASS_OBJECT in
+        <foreach collection="objs" open="(" close=")" separator="," item="assobj" index="i">
+            #{assobj}
+        </foreach>
+        <if test="ASS_DATE !=null">
+            and ASS_DATE=#{ASS_DATE}
+        </if>
+    </select>-->
+
+    <select id="AssResultList" resultType="pd" parameterType="pd">
+        select * from ASS_RESULT where  ADJUSTER = #{userName} or ASS_OBJECT = #{userName}
+    </select>
+
+    <insert id="addResult" parameterType="pd">
+        insert into ASS_RESULT
+        (
+        <include refid="field"/>
+        )
+        values (
+        <include refid="fieldValue"/>
+        )
+    </insert>
+
+    <update id="upSco" parameterType="pd">
 		update ASS_RESULT set
 		"F_SCO"=#{F_SCO},
 		"QUALITY"=#{QUALITY},
@@ -109,6 +82,7 @@
 		"ACTION"=#{ACTION},
 		"RESPONSIBILITY"=#{RESPONSIBILITY},
 		"CREATIVE"=#{CREATIVE},
+		"ASS_DATE"=#{ASS_DATE},
 		"ASS_LEVEL"=#{ASS_LEVEL}
 		where "ID"=#{ID} 
 	</update>

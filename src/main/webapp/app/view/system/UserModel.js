@@ -7,7 +7,7 @@ Ext.define('Wsitms.view.system.UserModel', {
     stores:{
     	userStore:{
     		model:'User',
-    		pageSize:30,
+    		pageSize:100,
     		autoLoad:false,
     		remoteFilter:false,//开启过滤条件
     		remoteSort:false,//开启排序条件

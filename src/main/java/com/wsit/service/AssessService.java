@@ -20,17 +20,7 @@ public interface AssessService {
 	
 	public void addAss(PageData pd)throws Exception;
 	
-	public void modAss(PageData pd)throws Exception;
-	
-	public void delAss(PageData pd)throws Exception;
-	
 	public List<PageData> AssResList(PageData pd)throws Exception;
-	
-	public void addAssRes(PageData pd)throws Exception;
-	
-	public void modAssRes(PageData pd)throws Exception;
-	
-	public void delAssRes(PageData pd)throws Exception;
 	
 	public void modAssSco(PageData pd)throws Exception;
 	
@@ -44,7 +34,7 @@ public interface AssessService {
 	
 	public void addAssPlan(PageData pd)throws Exception;
 		
-	public List<PageData> asspatList(PageData pd)throws Exception;	
+
 		
 	public List<PageData> AssResultList(PageData pd)throws Exception;
 

@@ -38,7 +38,7 @@
           #{ID},
           #{ADJUSTER},
           #{ASS_OBJECT},
-          #{OBJ_GROUP}
+          #{ASSGROUP}
      </sql>
 
 
@@ -69,6 +69,13 @@
         where "ASSGROUP"=#{OBJ_GROUP} and  "ADJUSTER" =#{userName}
     </select>
 
+    <select id="getHeader" parameterType="string" resultType="string">
+        SELECT
+        HEADER
+        FROM
+        <include refid="tableName"/>
+        where "PLANNAME"=#{PLANNAME}
+    </select>
     <select id="queryAsj" parameterType="string" resultType="pd">
         SELECT ASS_OBJECT
         FROM <include refid="tableName1"/> where ASSGROUP = #{OBJ_GROUP} and ADJUSTER= #{ADJUSTER}

@@ -26,6 +26,11 @@ public class RoleServiceImp implements RoleService{
 
 	@Override
 	public void modRole(PageData pd) throws Exception {
+		PageData pageData = new PageData();
+		String USER_ROLE = (String) dao.findForObject("RoleMapper.queryRole",pd);
+		pageData.put("USER_ROLE",USER_ROLE);
+		pageData.put("ROLE_NAME",pd.getString("ROLE_NAME"));
+		dao.update("UserMapper.upRole",pageData);
 		dao.update("RoleMapper.modRole", pd);		
 	}
 	

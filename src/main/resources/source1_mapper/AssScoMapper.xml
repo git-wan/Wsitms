@@ -33,12 +33,6 @@
             select * from <include refid="tableName"/> where ASS_ID = #{ASS_ID}
     </select>
     
-    <select id="aseetOne" parameterType="string" resultType="pd">
-        SELECT <include refid="field"/>
-        FROM   <include refid="tableName"/>  
-        where "ID"=#{id}
-    </select>
-    
     <insert id="addAssSco" parameterType="pd">
             insert into <include refid="tableName"/> ( <include refid="field"/> )
             values ( <include refid="fieldValue"/> ) 

@@ -48,7 +48,7 @@ Ext.define("Wsitms.view.system.User",{
   
     },{
         text:'用户类型',
-        dataIndex:'USER_TYPE',
+        dataIndex:'USER_ROLE',
         flex:1
     },{
         text:'密码',
