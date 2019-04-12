@@ -61,6 +61,9 @@
 
     <select id="AssResultList" resultType="pd" parameterType="pd">
         select * from ASS_RESULT where  ADJUSTER = #{userName} or ASS_OBJECT = #{userName}
+        <if test="PLANNAME != null">
+            and PLANNAME=#{PLANNAME}
+        </if>
     </select>
 
     <insert id="addResult" parameterType="pd">

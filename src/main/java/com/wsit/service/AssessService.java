@@ -53,4 +53,6 @@ public interface AssessService {
 	int isAsj(PageData pd)throws Exception;
 
 	List<String>  getAsj(PageData pd)throws Exception;
+
+	List<PageData> queryPlan(PageData pd)throws Exception;
 }

@@ -14,7 +14,7 @@
           "RULENAME",
           "HEADER",
           "PLANNAME"
-     </sql>
+    </sql>
     <sql id="fieldValue">
           #{ID},
           #{STARTDATE},
@@ -63,10 +63,10 @@
     </select>
     <select id="isAsj" parameterType="pd" resultType="pd">
         SELECT
-          *
+        *
         FROM
         <include refid="tableName1"/>
-        where "ASSGROUP"=#{OBJ_GROUP} and  "ADJUSTER" =#{userName}
+        where "ASSGROUP"=#{OBJ_GROUP} and "ADJUSTER" =#{userName}
     </select>
 
     <select id="getHeader" parameterType="string" resultType="string">
@@ -78,16 +78,21 @@
     </select>
     <select id="queryAsj" parameterType="string" resultType="pd">
         SELECT ASS_OBJECT
-        FROM <include refid="tableName1"/> where ASSGROUP = #{OBJ_GROUP} and ADJUSTER= #{ADJUSTER}
-         <if test="objs!=null and objs.size()>0">
-         and  ASS_OBJECT not in
-        <foreach collection="objs" open="(" close=")" separator=","
-                 item="assobj" index="i">
-            #{assobj}
-        </foreach>
-         </if>
+        FROM
+        <include refid="tableName1"/>
+        where ASSGROUP = #{OBJ_GROUP} and ADJUSTER= #{ADJUSTER}
+        <if test="objs!=null and objs.size()>0">
+            and ASS_OBJECT not in
+            <foreach collection="objs" open="(" close=")" separator=","
+                     item="assobj" index="i">
+                #{assobj}
+            </foreach>
+        </if>
     </select>
-
+    <select id="queryPlan" parameterType="pd" resultType="pd">
+        select PLANNAME from
+        <include refid="tableName"/>
+    </select>
     <insert id="addAssPlan" parameterType="pd">
         insert into
         <include refid="tableName"/>

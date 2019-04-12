@@ -49,7 +49,7 @@ public class AssessServiceImp implements AssessService {
         String HEADER = pd.getString("HEADER");
         PageData assresult = new PageData();
         assresult.put("ASS_OBJECT", pd.getString("ASS_OBJECT"));
-        assresult.put("ASS_OBJECT", pd.getString("PLANNAME"));
+        assresult.put("PLANNAME", pd.getString("PLANNAME"));
         String ID = UuidUtil.get32UUID();
         pd.put("ID", ID);
         Date sdate = DateUtil.fomatDate(pd.get("ASS_DATE").toString());
@@ -302,6 +302,11 @@ public class AssessServiceImp implements AssessService {
         pageData.put("ADJUSTER", pd.getString("userName"));
         List<String> objs = (List<String>) dao.findForList("AssPlanMapper.queryAsj", pageData);
         return objs;
+    }
+
+    @Override
+    public List<PageData> queryPlan(PageData pd) throws Exception {
+        return (List<PageData>) dao.findForList("AssPlanMapper.queryPlan",pd);
     }
 
 }

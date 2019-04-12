@@ -17,29 +17,34 @@ Ext.define('Wsitms.view.assess.AssRs',{
 	tbar:[{
 		glyph:0xf1c3,
 		text:'考核表',
-	    handler:'assess',
+	    handler:'assess'
 	},'-',{
 		id:'dlink',
 		glyph:0xf1c3,
 		text:'导出EXCEL',
-	    handler:'aa',
+	    handler:'aa'
 	},'-',{
-		fieldLabel:'查询时间',
-		xtype:'datefield',	
-		reference:'queryDate',
+		fieldLabel:'评定计划名称',
+		xtype:'combobox',
+		name:'PLANNAME',
 		editable:false,
-		name:'ASS_DATE',
-		//maxValue:new Date(),
-		//minValue:new Date(new Date()-7*24*60*60*1000),
-		editable:false,
-		format:'Y-m',
-		listeners:{
-			change:'changeDate'
+		allowBlank : false,
+		displayField : 'PLANNAME',
+		valueField : 'PLANNAME',
+		bind : {
+            store : '{planstore}'
+        },
+		listeners : {
+			change : 'changePlan'
 		}
 	}],
 	columns:[{
 		text:'评定时间',
 		dataIndex:'ASS_DATE',
+		flex:1
+	},{
+		text:'评定计划名称',
+		dataIndex:'PLANNAME',
 		flex:1
 	},{
 		text:'评定对象',
@@ -95,7 +100,5 @@ Ext.define('Wsitms.view.assess.AssRs',{
     		delay:1,
     		single:true//只执行一次
     	}
-    },
-
-   
-})
+    }
+});

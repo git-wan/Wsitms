@@ -96,7 +96,7 @@
     <!--查询未评定对象-->
     <select id="getAssObj" resultType="string" parameterType="pd">
     select  ASS_OBJECT from  <include refid="tableName"/>
-    where PLANNAME=#{PLANNAME} and ADJUSTER=#{ADJUSTER}
+    where PLANNAME=#{PLANNAME} and ADJUSTER=#{userName}
     </select>
 
 
